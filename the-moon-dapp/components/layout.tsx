@@ -5,7 +5,8 @@ import { dark, grommet } from 'grommet/themes';
 import MoonLogoSvg              from '../components/svg/moon_logo';
 import styled                   from 'styled-components';
 import { Color, Colors, theme } from "../styles/theme";
-import Link from 'next/link';
+import Link                     from 'next/link';
+import { Toaster }              from "react-hot-toast";
 
 
 
@@ -61,6 +62,17 @@ const Layout : FunctionComponent<PropsWithChildren<{}>> = ({ children } : PropsW
             <Main background = "background-primary" pad="small" fill = {true} overflow = 'inherit'>
                 {children}
             </Main>
+            <Toaster
+              position="bottom-right"
+              reverseOrder={false}
+              toastOptions={{
+                style: {
+                    border: '1px solid #713200',
+                    backgroundColor: Colors[Color.GREY_8],
+                    color: Colors[Color.WHEAT],
+                  },
+              }}
+            />
         </Grommet>
     )
 }
