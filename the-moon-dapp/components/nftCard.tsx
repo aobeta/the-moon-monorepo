@@ -11,15 +11,19 @@ import React, {
     useState,
     useEffect, 
 }                                       from "react";
+import { MediaType }                    from "../types/media";
+import VideoElement                     from "./media/videoElement";
 
 interface Props {
     mediaFile : File;
+    mediaType: MediaType;
     title: string;
 }
 
 const NFTCard : FunctionComponent<Props> = (props : Props) => {
     const { 
         mediaFile,
+        mediaType,
         title,
     } = props;
 
@@ -44,7 +48,6 @@ const NFTCard : FunctionComponent<Props> = (props : Props) => {
     return (
         <Box
             round = '10px'
-            alignSelf = 'center'
             background = {{
                 image: 'url(/stars.webp)', 
                 size: 'cover'
@@ -58,10 +61,13 @@ const NFTCard : FunctionComponent<Props> = (props : Props) => {
               background = 'light-6'
             >
                 <CardBody>
-                    <Image
-                        fit= 'cover'
-                        src= {fileSource}
-                    />
+                    {mediaType === MediaType.Image && 
+                        <Image
+                            fit= 'cover'
+                            src= {fileSource}
+                        />
+                    }
+                    {mediaType === MediaType.Video && <VideoElement videoFile = {mediaFile} customWidth = {350} />}
                 </CardBody>
                 <CardFooter pad ='medium' direction = 'row' gap = 'xxsmall'>
                     <Box>

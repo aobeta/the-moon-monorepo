@@ -29,29 +29,50 @@ import {
 }                                                       from 'grommet-icons';
 import styled                                           from 'styled-components';
 import empty                                            from 'lodash/isEmpty';
-import { MediaType }                                    from "../../types/media";
+import { 
+    DisplayAcceptedMediaTypes, 
+    MediaType 
+}                                                       from "../../types/media";
 import UploadPreview                                    from "../../components/upload/uploadPreview";
 import NFTCard                                          from "../../components/nftCard";
-import { Color, Colors } from "../../styles/theme";
+import { 
+    Color, 
+    Colors, 
+}                                                       from "../../styles/theme";
+import { useRouter }                                    from 'next/router';
+import { withQueryParams }                              from "../../utils/queryParams";
 
-
-const AcceptedMediaTypes = {
-    [MediaType.Audio]: 'MP3',
-    [MediaType.Video]: 'MP4',
-    [MediaType.Image]: 'JPEG or PNG',
+const validateMediaType = (type: string | MediaType) => {
+    switch(type) {
+        case MediaType.Image:
+        case MediaType.Video:
+        case MediaType.Audio:
+            return true;
+        default:
+            return false;
+    }
 }
 
 const MAX_DESCRIPTION_LENGTH = 550;
 const MAX_TITLE_LENGTH = 50;
 
+const mediaTypeIsDisabled = (mediaType: MediaType) => {
+    return mediaType === MediaType.Audio;
+}
 
 const MintPage : FunctionComponent = () => {
-    const [currentStep, setCurrentStep] = useState<number>(-1);
-    const [mediaType, setMediaType] = useState<MediaType>();
-    const [mediaFile, setMediaFile]     = useState<File>();
-    const [title, setTitle] = useState<string>('');
-    const [description, setDescription] = useState<string>('');
-    const [errorText, setErrorText] = useState<string>();
+    const [currentStep, setCurrentStep]     = useState<number>(undefined);
+    const [mediaType, setMediaType]         = useState<MediaType>();
+    const [mediaFile, setMediaFile]         = useState<File>();
+    const [title, setTitle]                 = useState<string>('');
+    const [description, setDescription]     = useState<string>('');
+    const [errorText, setErrorText]         = useState<string>();
+
+    const {
+        pathname,
+        push,
+        query,
+    } = useRouter();
 
     const steps = [
         'Upload', 
@@ -59,10 +80,8 @@ const MintPage : FunctionComponent = () => {
         'Mint',
     ];
 
-    const onMediaTypeSelected = (media: MediaType) => {
-        // push(withQueryParams(pathname, { media }))
-        setMediaType(media);
-        setCurrentStep(currentStep + 1);
+    const onMediaTypeSelected = (mediaType: MediaType) => {
+        push(withQueryParams(pathname, { mediaType }));
     }
 
     const incrementStep = () => {
@@ -88,6 +107,16 @@ const MintPage : FunctionComponent = () => {
         incrementStep();
     }
 
+    useEffect(() => {
+        if (query.mediaType != null && validateMediaType(query.mediaType as string)) {
+            setMediaType(query.mediaType as MediaType);
+            setCurrentStep(0);
+        }
+        else {
+            setCurrentStep(-1);
+        }
+    }, [query.mediaType]);
+
     const renderStep = (step: number) => {
         switch (step) {
             case -1:
@@ -99,11 +128,14 @@ const MintPage : FunctionComponent = () => {
                             justify = 'around'
                         >
                             {Object.keys(MediaType).map((mediaType : MediaType) => 
-                                <ClickableCard key = {mediaType} {...cardProps} onClick = { () => onMediaTypeSelected(mediaType) }>
-                                    <Video {...iconProps}/>
-                                    <Text {...textProps}>{mediaType}</Text>
-                                    <Text {...subTextProps}>{AcceptedMediaTypes[mediaType]}</Text>
-                                </ClickableCard>
+                                <Button disabled = {mediaTypeIsDisabled(mediaType)} key = {mediaType}  onClick = { () => onMediaTypeSelected(mediaType) }>
+                                    <ClickableCard {...cardProps}>
+                                        <Video {...iconProps}/>
+                                        <Text {...textProps}>{mediaType}</Text>
+                                        <Text {...subTextProps}>{DisplayAcceptedMediaTypes[mediaType]}</Text>
+                                        {mediaTypeIsDisabled(mediaType) && <Text {...subTextProps}>(Coming Soon)</Text>}
+                                    </ClickableCard>
+                                </Button>
                             )}
                         </Box>
                     </>
@@ -120,7 +152,7 @@ const MintPage : FunctionComponent = () => {
                               multiple = {false}
                               messages = {{
                                   browse: 'or click to browse',
-                                  dropPrompt: `Drop ${AcceptedMediaTypes[mediaType]} file here`
+                                  dropPrompt: `Drop ${DisplayAcceptedMediaTypes[mediaType]} file here`
                               }}
                               onChange = {(e) => setMediaFile(e.target.files[0])}
                             />
@@ -193,8 +225,9 @@ const MintPage : FunctionComponent = () => {
                     >
                         <FadeIn>
                             <NFTCard 
-                            mediaFile = { mediaFile }
-                            title = {title} 
+                             mediaFile = { mediaFile }
+                             mediaType = { mediaType }
+                             title = {title} 
                             />
                         </FadeIn>
                     </Box>
@@ -286,7 +319,7 @@ const subTextProps : TextExtendedProps = {
 }
 
 const ClickableCard = styled(Card)<BoxTypes>`
-    cursor: pointer;
+
 `;
 
 interface ErrorTextProps extends TextExtendedProps {

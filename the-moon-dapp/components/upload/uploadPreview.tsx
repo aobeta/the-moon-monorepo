@@ -1,21 +1,29 @@
 import { 
     Box, 
     Button, 
-    Image, 
+    Image,
+    Stack,
 }                                       from "grommet";
 import React, { 
     FunctionComponent, 
     useEffect, 
     useState, 
 }                                       from "react";
-import styled from "styled-components";
-import { MediaType }                    from "../../types/media";
+import styled                           from "styled-components";
+import { DisplayAcceptedMediaTypes, MediaType }                    from "../../types/media";
+import VideoElement                     from "../media/videoElement";
+import toast                            from 'react-hot-toast';
 
 interface Props {
     file: File,
     mediaType: MediaType,
     onClear: () => void,
     onAccept: () => void
+}
+
+const AcceptedMediaTypes = {
+    [MediaType.Image]: ["image/jpeg", "image/png"],
+    [MediaType.Video]: ["video/mp4"],
 }
 
 const UploadPreview : FunctionComponent<Props> = (props: Props) => {
@@ -26,33 +34,45 @@ const UploadPreview : FunctionComponent<Props> = (props: Props) => {
         mediaType,
     } = props;
 
-    // const [fileSource, setFileSource] = useState<string>();
+    const [fileSource, setFileSource] = useState<string>();
     
-    // useEffect(() => {
-    //     if (mediaType === MediaType.Image) {
-    //         const fileReader = new FileReader();
+    useEffect(() => {
+        verifyFileInput(file);
 
-    //         fileReader.addEventListener('load', () => {
-    //             setFileSource(fileReader.result as string);
-    //         });
+        if (mediaType === MediaType.Image) {
+            const fileReader = new FileReader();
 
-    //         fileReader.readAsDataURL(file);
-    //     }
-    // }, [file]);
-    const fileUrl = URL.createObjectURL(file);
+            fileReader.addEventListener('load', () => {
+                setFileSource(fileReader.result as string);
+            });
+
+            fileReader.readAsDataURL(file);
+        }
+    }, [file]);
+
+    const verifyFileInput = (file: File) => {
+        const acceptedMediaTypes : string[] = AcceptedMediaTypes[mediaType];
+
+        if (!acceptedMediaTypes.includes(file.type)) {
+            toast.error(`Please Upload only ${DisplayAcceptedMediaTypes[mediaType]} file.`);
+            onClear();
+            return;
+        }
+    }
 
     const renderMedia = () => {
         switch (mediaType) {
             case MediaType.Image:
                 return (
-                    <Image
+                    <ImageBox
                         alignSelf = 'center'
-                        src={fileUrl}
-                        style = {{ borderRadius : '5px', maxWidth: '400px'}}
+                        src={fileSource}
                     />
                 );
             case MediaType.Video:
-                return null;
+                return (
+                    <VideoElement videoFile = {file} />
+                );
             default:
                 return null;
         }
