@@ -1,12 +1,30 @@
-import { FunctionComponent, PropsWithChildren } from "react";
-import { Grommet, Header, Anchor, Box, ResponsiveContext, Menu, Main } from 'grommet';
-import { Menu as MenuIcon } from 'grommet-icons';
-import { dark, grommet } from 'grommet/themes';
-import MoonLogoSvg              from '../components/svg/moon_logo';
-import styled                   from 'styled-components';
-import { Color, Colors, theme } from "../styles/theme";
-import Link                     from 'next/link';
-import { Toaster }              from "react-hot-toast";
+import { 
+    FunctionComponent, 
+    PropsWithChildren 
+}                                           from "react";
+import { 
+    Grommet, 
+    Header, 
+    Anchor, 
+    Box, 
+    ResponsiveContext, 
+    Menu, 
+    Main 
+}                                           from 'grommet';
+import { Menu as MenuIcon }                 from 'grommet-icons';
+import { 
+    dark, 
+    grommet 
+}                                           from 'grommet/themes';
+import MoonLogoSvg                          from '../components/svg/moon_logo';
+import styled                               from 'styled-components';
+import { 
+    Color, 
+    Colors, 
+    theme 
+}                                           from "../styles/theme";
+import Link                                 from 'next/link';
+import { Toaster }                          from "react-hot-toast";
 
 
 
@@ -36,12 +54,12 @@ const Layout : FunctionComponent<PropsWithChildren<{}>> = ({ children } : PropsW
                             icon={<MenuIcon color="brand" />}
                             items={[
                             {
-                                label: <Box pad="small">Grommet.io</Box>,
-                                href: 'https://v2.grommet.io/',
+                                label: <Box pad="small">MarketPlace</Box>,
+                                href: '#',
                             },
                             {
-                                label: <Box pad="small">Feedback</Box>,
-                                href: 'https://github.com/grommet/grommet/issues',
+                                label: <Box pad="small">Mint</Box>,
+                                href: '#',
                             },
                             ]}
                         />
