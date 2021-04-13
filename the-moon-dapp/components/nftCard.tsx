@@ -11,6 +11,7 @@ import React, {
     useState,
     useEffect, 
 }                                       from "react";
+import styled from "styled-components";
 import { MediaType }                    from "../types/media";
 import VideoElement                     from "./media/videoElement";
 
@@ -46,7 +47,7 @@ const NFTCard : FunctionComponent<Props> = (props : Props) => {
     }, [mediaFile]);
 
     return (
-        <Box
+        <CardContainer
             round = '10px'
             background = {{
                 image: 'url(/stars.webp)', 
@@ -86,8 +87,14 @@ const NFTCard : FunctionComponent<Props> = (props : Props) => {
                     />
                 </CardFooter>
             </Card>
-        </Box>
+        </CardContainer>
     )
 };
+
+const CardContainer = styled(Box)`
+    transform: scale(0.85);
+    box-shadow: 60px 82px 56px #1a1a1a;
+    animation: hoverCard 1s ease-in-out 0s infinite alternate;
+`;
 
 export default NFTCard;

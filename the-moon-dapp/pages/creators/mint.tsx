@@ -323,11 +323,11 @@ const stepperStyleConfig = {
     completedTextColor: Colors[Color.GREY_8],
     inactiveBgColor: '#999',
     inactiveTextColor: "#ccc",
-    size: '2em',
-    circleFontSize: '1rem',
-    labelFontSize: '0.875rem',
+    size: '1.4em',
+    circleFontSize: '0.7rem',
+    labelFontSize: '0.8rem',
     borderRadius: '50%',
-    fontWeight: '500'
+    fontWeight: '400'
 };
 
 const cardProps : BoxTypes = {
