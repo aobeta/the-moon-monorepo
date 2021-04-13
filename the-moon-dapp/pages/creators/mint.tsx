@@ -67,6 +67,7 @@ const MintPage : FunctionComponent = () => {
     const [title, setTitle]                 = useState<string>('');
     const [description, setDescription]     = useState<string>('');
     const [errorText, setErrorText]         = useState<string>();
+    const [nftPrice, setNftPrice]           = useState<string>('');
 
     const {
         pathname,
@@ -143,7 +144,9 @@ const MintPage : FunctionComponent = () => {
             case 0:
                 return (
                     <Box 
-                      pad = 'large'
+                      pad = {{
+                          horizontal: '150px'
+                      }}
                       height = 'medium'
                     >
                         {mediaFile == null && 
@@ -217,10 +220,11 @@ const MintPage : FunctionComponent = () => {
                 return (
                     <Box 
                       pad = {{
-                          vertical: 'small',
+                          vertical: 'medium',
                           horizontal: 'none'
                       }}
                       direction = 'row'
+                      alignContent = 'center'
                       justify = 'center'
                     >
                         <FadeIn>
@@ -230,6 +234,49 @@ const MintPage : FunctionComponent = () => {
                              title = {title} 
                             />
                         </FadeIn>
+                        <FadeIn>
+                        <Box 
+                          round
+                          justify = 'center'  
+                          width = 'medium'
+                          margin = {{ horizontal : '40px'}} 
+                          background = 'background-primary'
+                        >
+                                <Heading level = {3} margin = 'none'>Set Price and Royalties</Heading>
+                                <Paragraph size = 'small'>
+                                    Set Price, royalties and how many of this NFT you would like to mint. Once minted these details cannot be changed.
+                                </Paragraph>
+                                <Box margin = {{ vertical: 'xsmall'}}>
+                                    <TextInput 
+                                      type = 'number'
+                                      focusIndicator = {false}
+                                      icon = {<div>$</div>} 
+                                      placeholder = 'Price'
+                                      value = {nftPrice}
+                                      onChange = {(e) => setNftPrice(e.target.value)}
+                                    />
+                                    <SupportingMessage size = 'xsmall' alignSelf = 'center' visible = {!empty(nftPrice)}>0.55 ETH</SupportingMessage>
+                                </Box>
+                                <Box margin = {{ vertical: 'xsmall'}}>
+                                    <TextInput 
+                                        type = 'number'
+                                        focusIndicator = {false} 
+                                        placeholder = 'Royalty %'
+                                    />
+                                    <SupportingMessage size = 'xsmall' alignSelf = 'center' visible>The Moon also adds a 5% royalty on top of yours</SupportingMessage>
+                                </Box>
+                                <Box margin = {{ vertical: 'xsmall'}}>
+                                    <TextInput 
+                                        type = 'number'
+                                        max = {1000}
+                                        focusIndicator = {false} 
+                                        placeholder = 'Quantity'
+                                    />
+                                    <SupportingMessage size = 'xsmall' alignSelf = 'center' visible>Only 1000 editions of an NFT can be minted at this time</SupportingMessage>
+                                </Box>
+                                <Button primary label='Mint' color = 'brand' margin = 'xsmall' onClick = { validateTitleOrDescriptionBeforeContinuing }/>
+                            </Box>
+                        </FadeIn>
                     </Box>
                 )
             default:
@@ -238,7 +285,7 @@ const MintPage : FunctionComponent = () => {
     }
 
     return (
-        <Box justify = 'center' fill={true}>
+        <Box justify = 'center' fill>
             {currentStep >= 0 && 
                 <FadeIn>
                     <Stepper 
@@ -297,7 +344,7 @@ const cardProps : BoxTypes = {
 };
 
 const MediumTextArea = styled(TextArea)`
-    height: 150px;
+    height: 100px;
 `;
 
 const iconProps : IconProps =  {
@@ -327,6 +374,11 @@ interface ErrorTextProps extends TextExtendedProps {
 }
 
 const ErrorText = styled(Text)<ErrorTextProps>`
+    visibility: ${(props: ErrorTextProps) => props.visible ? 'visible' : 'hidden'};
+    margin-top: 5px;
+`;
+
+const SupportingMessage = styled(Text)<ErrorTextProps>`
     visibility: ${(props: ErrorTextProps) => props.visible ? 'visible' : 'hidden'};
     margin-top: 5px;
 `;

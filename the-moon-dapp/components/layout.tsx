@@ -20,7 +20,7 @@ const Layout : FunctionComponent<PropsWithChildren<{}>> = ({ children } : PropsW
             themeMode = 'dark'
             background = 'background-primary'
         >
-            <Header as='nav' background={Colors[Color.GREY_8]} pad="medium" height="xsmall">
+            <Header as='nav' background={Colors[Color.GREY_8]} pad="medium" height="90px">
                 <LogoBrand
                     href="#"
                     icon={<MoonLogoSvg/>}
@@ -59,7 +59,7 @@ const Layout : FunctionComponent<PropsWithChildren<{}>> = ({ children } : PropsW
                     }
                 </ResponsiveContext.Consumer>
             </Header>
-            <Main background = "background-primary" pad="small" fill = {true} overflow = 'inherit'>
+            <Main background = "background-primary" pad="xsmall" fill = {true} overflow = 'inherit'>
                 {children}
             </Main>
             <Toaster

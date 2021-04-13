@@ -54,6 +54,7 @@ const NFTCard : FunctionComponent<Props> = (props : Props) => {
             }}
             width = 'medium'
             pad = '10px'
+            margin = {{ horizontal : '40px'}} 
         >
             <Card
               round = '2px'
