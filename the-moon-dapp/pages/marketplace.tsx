@@ -1,12 +1,7 @@
-import { FunctionComponent }            from "react";
+import { FunctionComponent } from 'react';
 
-const Marketplace : FunctionComponent = () => {
-    return (
-        <div>
-            marketplace
-        </div>
-    )
-}
-  
+const Marketplace: FunctionComponent = () => {
+  return <div>marketplace</div>;
+};
 
 export default Marketplace;

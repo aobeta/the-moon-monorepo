@@ -1,8 +1,7 @@
+import { FunctionComponent } from 'react';
 
-export default function Home() {
-  return (
-    <div>
-      Index
-    </div>
-  )
-}
+const Home: FunctionComponent = () => {
+  return <div>Index</div>;
+};
+
+export default Home;
