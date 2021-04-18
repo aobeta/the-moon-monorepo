@@ -1,4 +1,5 @@
 import { ThemeType } from 'grommet';
+import { css } from 'styled-components';
 import colors from './colors.module.scss';
 
 export enum Color {
@@ -44,9 +45,9 @@ export const theme: ThemeType = {
     },
   },
   fileInput: {
-    extend: `
-            height: '500px';
-            border-width: '5px';
-        `,
+    extend: css`
+      height: 500px;
+      border-width: 5px;
+    `,
   },
 };

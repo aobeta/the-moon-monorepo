@@ -101,7 +101,7 @@ const MintPage: FunctionComponent = () => {
       case -1:
         return (
           <>
-            <Heading margin={{ bottom: '80px' }} level={3} alignSelf="center">
+            <Heading margin={{ bottom: '80px' }} level={3} alignSelf="center" color="brand">
               Select Media Type
             </Heading>
             <Box direction="row-responsive" justify="around">
