@@ -31,3 +31,8 @@ a {
   0% { transform : translateY(2px) scale(0.85);}
   100% { transform: translateY(-1px) scale(0.85);}
 }
+
+.scripted-text {
+  font-family: 'Bello Script', Brush Script MT;
+  color: colors.$wheat;
+}
