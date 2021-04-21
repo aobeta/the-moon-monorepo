@@ -3,8 +3,11 @@ import { Location } from 'grommet-icons';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FunctionComponent, useEffect, useState } from 'react';
+import FadeIn from 'react-fade-in';
 import HeartIcon from '../components/customIcons/heart';
+import SocialIcon from '../components/customIcons/socialIcon';
 import { TabLink } from '../components/underLineLink';
+import { SocialLinkType } from '../types/social';
 
 enum ProfileTab {
   About = 'about',
@@ -12,17 +15,13 @@ enum ProfileTab {
   Packs = 'packs',
 }
 
-enum LinkType {
-  YouTube,
-  Twitter,
-  PornHub,
-  OnlyFans,
-  Instagram,
+interface SocialLink {
+  linkType: SocialLinkType;
+  url: string;
 }
 
-interface SocialLink {
-  linkType: LinkType;
-  url: string;
+interface Tab {
+  active: boolean;
 }
 
 const getPathHash = (path: string) => {
@@ -107,16 +106,42 @@ const ProfilePage: FunctionComponent = () => {
           <HeartIcon fillRed={false} />
         </Box>
         {/* Tab Content */}
-        <Box></Box>
+        <Box pad={{ vertical: 'medium' }} fill>
+          <AboutTab
+            active={activeTab === ProfileTab.About}
+            description="Hi there! I’m Effie! Excited to get to know you! (personal blurb)"
+          />
+        </Box>
       </Box>
     </Box>
   );
 };
 
-const AboutTab: FunctionComponent<{ description: string; links: SocialLink[] }> = (props) => {
-  const { description, links } = props;
+interface AboutTabProps extends Tab {
+  description: string;
+  links?: SocialLink[];
+}
 
-  return <Box></Box>;
+const AboutTab: FunctionComponent<AboutTabProps> = (props) => {
+  const { description, active } = props;
+
+  return (
+    <FadeIn>
+      <Box alignSelf="center" direction="row" justify="center" hidden={active} fill>
+        {/* Left side */}
+        <Box fill>
+          <Paragraph color="brand">{description}</Paragraph>
+        </Box>
+        {/* Right side */}
+        <Box direction="row" fill>
+          <Heading></Heading>
+          <SocialIcon socialLinkType={SocialLinkType.OnlyFans} />
+          <SocialIcon socialLinkType={SocialLinkType.Instagram} />
+          <SocialIcon socialLinkType={SocialLinkType.Twitter} />
+        </Box>
+      </Box>
+    </FadeIn>
+  );
 };
 
 export default ProfilePage;
