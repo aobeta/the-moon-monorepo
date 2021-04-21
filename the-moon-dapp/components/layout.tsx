@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { Toaster } from 'react-hot-toast';
 import { Color, Colors, theme } from '../styles/theme';
 import MoonLogoSvg from '../components/svg/moon_logo';
+import { NavLink } from './underLineLink';
 
 const Layout: FunctionComponent = ({ children }) => (
   <Grommet
@@ -74,35 +75,6 @@ const LogoBrand = styled(Anchor)`
   text-decoration: none !important;
   font-size: 1.75rem;
   color: ${Colors[Color.WHEAT]};
-`;
-
-const NavLink = styled(Anchor)`
-  text-transform: uppercase;
-  text-decoration: none !important;
-  letter-spacing: 0.15em;
-  display: inline-block;
-  position: relative;
-  margin: 0 30px;
-
-  &::after {
-    background: none repeat scroll 0 0 transparent;
-    bottom: 0;
-    content: '';
-    display: block;
-    height: 2px;
-    left: 50%;
-    position: absolute;
-    background: ${Colors[Color.WHEAT]};
-    transition: width 0.3s ease 0s, left 0.3s ease 0s;
-    width: 0;
-  }
-
-  &:hover {
-    &::after {
-      width: 100%;
-      left: 0;
-    }
-  }
 `;
 
 export default Layout;
