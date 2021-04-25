@@ -1,5 +1,13 @@
-import NextAuth from 'next-auth';
+import NextAuth, { Profile } from 'next-auth';
 import Providers from 'next-auth/providers';
+import userRepository from '../../../prisma/repositories/UserRepository';
+
+interface MoonProfile extends Profile {
+	email: string;
+	nickname: string;
+	picture: string;
+	email_verified: boolean;
+}
 
 export default NextAuth({
 	providers: [
@@ -17,9 +25,18 @@ export default NextAuth({
 			}
 			return session;
 		},
-		signIn: async (user, account, profile) => {
-			console.log(user, account, profile);
+		async signIn(user, account, profile: MoonProfile) {
+			console.log('SIGN IN :: ', user, account, profile);
+			await userRepository.findOrCreateUser(user.id as string, profile);
 			return true;
+		},
+	},
+	jwt: {
+		secret: 'JwtSecretTest',
+	},
+	events: {
+		async signIn(message) {
+			console.log('SIGN IN EVENT :: ', message);
 		},
 	},
 });

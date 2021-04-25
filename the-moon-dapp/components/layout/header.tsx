@@ -7,12 +7,12 @@ import { NavLink } from '../underLineLink';
 import Link from 'next/link';
 import { Menu as MenuIcon } from 'grommet-icons';
 import { signIn } from 'next-auth/client';
-import { useSession } from 'next-auth/client';
+import { useUser } from '../../context/UserProvider';
 
 const Header: FunctionComponent = () => {
-	const [session] = useSession();
+	const { user, resolving } = useUser();
 
-	console.log('session :: ', session);
+	console.log('session :: ', user, resolving);
 
 	return (
 		<GrommetHeader as="nav" background={Colors[Color.GREY_8]} pad="medium" height="90px">
