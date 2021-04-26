@@ -26,7 +26,7 @@ export default NextAuth({
 			return session;
 		},
 		async signIn(user, account, profile: MoonProfile) {
-			console.log('SIGN IN :: ', user, account, profile);
+			// console.log('SIGN IN :: ', user, account, profile);
 			await userRepository.findOrCreateUser(user.id as string, profile);
 			return true;
 		},
@@ -35,8 +35,11 @@ export default NextAuth({
 		secret: 'JwtSecretTest',
 	},
 	events: {
-		async signIn(message) {
-			console.log('SIGN IN EVENT :: ', message);
+		// async signIn(message) {
+		// 	// console.log('SIGN IN EVENT :: ', message);
+		// },
+		async error(message) {
+			console.log('Error event EVENT :: ', message);
 		},
 	},
 });

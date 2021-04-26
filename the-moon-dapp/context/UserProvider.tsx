@@ -32,6 +32,8 @@ const UserProviderInner: FunctionComponent = ({ children }) => {
 					setUser(response.data as User);
 					setResolving(false);
 				});
+			} else {
+				setResolving(false);
 			}
 		}
 	}, [session, isLoadingSession]);

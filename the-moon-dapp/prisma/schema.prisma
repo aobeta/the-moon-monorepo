@@ -15,6 +15,6 @@ model User {
   userAuthId      String
   email           String
   fullName        String
-  profilePic      String
+  profilePic      String?
   emailVerified   Boolean
 }
