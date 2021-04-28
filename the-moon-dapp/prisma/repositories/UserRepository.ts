@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import prisma from '../../lib/db/prisma';
+import { colors, names, adjectives, uniqueNamesGenerator } from 'unique-names-generator';
 
 export interface Profile {
 	nickname: string;
@@ -32,6 +33,8 @@ export class UserRepository {
 			data: {
 				userAuthId,
 				fullName: profile.nickname as string,
+				username: generateRandomUsername(),
+				isUsingDefaultUsername: true,
 				profilePic: profile.picture as string,
 				email: profile.email,
 				emailVerified: profile.email_verified,
@@ -49,6 +52,12 @@ export class UserRepository {
 		return user;
 	}
 }
+
+const generateRandomUsername = () => {
+	const uniqueUsername = uniqueNamesGenerator({ dictionaries: [adjectives, colors, names] });
+
+	return uniqueUsername.toLowerCase();
+};
 
 const userRepository = new UserRepository(prisma);
 

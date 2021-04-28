@@ -11,10 +11,12 @@ generator client {
 }
 
 model User {
-  id              Int    @id @default(autoincrement())
-  userAuthId      String
-  email           String
-  fullName        String
-  profilePic      String?
-  emailVerified   Boolean
+  id                            Int    @id @default(autoincrement())
+  userAuthId                    String
+  email                         String
+  username                      String
+  isUsingDefaultUsername        Boolean
+  fullName                      String
+  profilePic                    String?
+  emailVerified                 Boolean
 }
