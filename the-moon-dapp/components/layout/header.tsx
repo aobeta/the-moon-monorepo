@@ -82,7 +82,7 @@ const Header: FunctionComponent = () => {
 					) : (
 						<>
 							<Box justify="end" direction="row" gap="medium" alignContent="center">
-								{userLoggedIn === false && (
+								{resolvingUser == false && userLoggedIn === false && (
 									<Button
 										primary
 										color="brand"
@@ -92,8 +92,10 @@ const Header: FunctionComponent = () => {
 										margin={{ right: 'medium' }}
 									/>
 								)}
-								{resolvingUser && <Spinner color="brand" />}
-								{userLoggedIn && (
+								{resolvingUser && (
+									<Spinner color="brand" margin={{ right: 'medium' }} size="small" />
+								)}
+								{resolvingUser == false && userLoggedIn && (
 									<Menu
 										label={renderAvatar()}
 										focusIndicator={false}
