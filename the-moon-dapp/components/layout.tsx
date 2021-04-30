@@ -70,7 +70,7 @@ const Layout: FunctionComponent = ({ children }) => (
 );
 
 const LogoBrand = styled(Anchor)`
-  font-family: 'Bello Script';
+  font-family: 'Parisienne';
   text-decoration: none !important;
   font-size: 1.75rem;
   color: ${Colors[Color.WHEAT]};
