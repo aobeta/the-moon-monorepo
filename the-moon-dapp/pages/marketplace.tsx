@@ -12,18 +12,19 @@ const Marketplace: FunctionComponent = () => {
 
   const handleToggleFilter = () => setShowFilter(!showFilter);
   const data = [
-    {
-      title: 'test-title',
-      mediaFile:
-        'https://preview.redd.it/5s6rkyn1hdu61.jpg?width=640&crop=smart&auto=webp&s=b84821a66ce65290f37abad91c10198657b9d302',
-      mediaType: MediaType.Image,
-    },
-    {
-      title: 'test-title',
-      mediaFile:
-        'https://preview.redd.it/z3zkgo19mdu61.jpg?width=640&crop=smart&auto=webp&s=e5d2a884b2015a242128c28e55af21843e46620d',
-      mediaType: MediaType.Image,
-    },
+    /** Images were deleted from reddit */
+    // {
+    //   title: 'test-title',
+    //   mediaFile:
+    //     'https://preview.redd.it/5s6rkyn1hdu61.jpg?width=640&crop=smart&auto=webp&s=b84821a66ce65290f37abad91c10198657b9d302',
+    //   mediaType: MediaType.Image,
+    // },
+    // {
+    //   title: 'test-title',
+    //   mediaFile:
+    //     'https://preview.redd.it/z3zkgo19mdu61.jpg?width=640&crop=smart&auto=webp&s=e5d2a884b2015a242128c28e55af21843e46620d',
+    //   mediaType: MediaType.Image,
+    // },
     {
       title: 'test-title',
       mediaFile: 'https://i.redd.it/oywdqqqxvau61.jpg',
