@@ -37,6 +37,7 @@ export const theme: ThemeType = {
       border: {
         dark: Color[WHEAT],
       },
+      selected: Colors[GREY_10],
     },
   },
   anchor: {

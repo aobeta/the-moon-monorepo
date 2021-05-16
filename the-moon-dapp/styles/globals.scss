@@ -4,6 +4,8 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
 
+@import url('@pathofdev/react-tag-input/build/index.css');
+
 @font-face {
   font-family: 'Bello Script';
   src: url(/fonts/Bello-Script.ttf);
@@ -46,4 +48,11 @@ a {
 @keyframes hoverCard {
   0% { transform : translateY(2px) scale(0.85);}
   100% { transform: translateY(-1px) scale(0.85);}
+}
+
+.react-tag-input {
+  border: 1px solid WHEAT;
+  border-radius: 4px;
+  background: none;
+  padding: 10px;
 }
