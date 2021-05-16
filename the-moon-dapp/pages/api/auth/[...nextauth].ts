@@ -1,6 +1,6 @@
 import NextAuth, { Profile } from 'next-auth';
 import Providers from 'next-auth/providers';
-import userRepository from '../../../prisma/repositories/UserRepository';
+import UserRepository from '@aobeta/db-model/repositories/UserRepository';
 
 interface MoonProfile extends Profile {
 	email: string;
@@ -27,7 +27,7 @@ export default NextAuth({
 		},
 		async signIn(user, account, profile: MoonProfile) {
 			// console.log('SIGN IN :: ', user, account, profile);
-			await userRepository.findOrCreateUser(user.id as string, profile);
+			await UserRepository.findOrCreateUser(user.id as string, profile);
 			return true;
 		},
 	},
