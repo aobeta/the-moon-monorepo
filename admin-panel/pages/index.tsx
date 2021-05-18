@@ -22,6 +22,11 @@ import UploadPreview from '../components/upload/uploadPreview';
 import NFTCard from '../components/nftCard';
 import { useRouter } from 'next/router';
 import { withQueryParams } from '../utils/queryParams';
+import axios from 'axios';
+import { MintMoonNftData } from "@aobeta/flow-lib/transactions/server/mintMoonNft";
+import set from 'lodash/set';
+import isEmpty from 'lodash/isEmpty';
+import {uploadFileToIPFS} from '../utils/upload';
 
 const validateMediaType = (type: string | MediaType) => {
 	switch (type) {
@@ -50,7 +55,7 @@ const MintPage: FunctionComponent = () => {
 	const [title, setTitle] = useState<string>('');
 	const [description, setDescription] = useState<string>('');
 	const [errorText, setErrorText] = useState<string>();
-	const [nftPrice, setNftPrice] = useState<string>('');
+	const [nftInfo, setNftInfo] = useState<Partial<MintMoonNftData>>({});
 
 	const { pathname, push, query } = useRouter();
 
@@ -86,6 +91,67 @@ const MintPage: FunctionComponent = () => {
 		incrementStep();
 	};
 
+	const onSetNftData = (value: string, path: string) => {
+		const newNFTData = {...nftInfo};
+		if (path == "count") {
+			set(newNFTData, path, Number(value));
+		}
+		else {
+			set(newNFTData, path, value);
+		}
+
+		setNftInfo(newNFTData);
+	}
+
+	const validateNftInfo = () => {
+		const {
+			count,
+			nftData
+		} = nftInfo;
+
+		if (isNaN(count) || count <= 0 ) {
+			throw new Error("Invalid Quantity");
+		}
+
+		if (nftData == null) {
+			throw new Error("No NFT Data")
+		}
+
+		const {
+			creator,
+			creatorProfile,
+		} = nftData;
+
+		if (isEmpty(creator)) {
+			throw new Error("Invalid Creator");
+		}
+
+		if (isEmpty(creatorProfile)) {
+			throw new Error("Invalid Creator Profile");
+		}
+	}
+
+	const mintNft = async () => {
+		validateNftInfo()
+		const nftInfoToSubmit = {...nftInfo};
+		const metadata = {
+			title,
+			description
+		}
+
+		set(nftInfoToSubmit, "nftData.metadata", metadata);
+		const fileIpfsHash = await uploadFileToIPFS(mediaFile);
+
+		const mediaUrl = `https://ipfs.io/ipfs/${fileIpfsHash}`;
+
+		set(nftInfoToSubmit, "nftData.mediaUrl", mediaUrl);
+
+		await axios.post('/api/nft/mint', nftInfoToSubmit)
+		  .then(response => console.log("response data : ", response.data));
+
+		alert("NFT Minted !");
+	}
+
 	useEffect(() => {
 		if (query.mediaType != null && validateMediaType(query.mediaType as string)) {
 			setMediaType(query.mediaType as MediaType);
@@ -94,6 +160,10 @@ const MintPage: FunctionComponent = () => {
 			setCurrentStep(-1);
 		}
 	}, [query.mediaType]);
+
+	useEffect(() => {
+		console.log("JWT :: ", process.env.NEXT_PUBLIC_PINATA_JWT);
+	}, [])
 
 	const renderStep = (step: number) => {
 		switch (step) {
@@ -140,7 +210,7 @@ const MintPage: FunctionComponent = () => {
 									dropPrompt: `Drop ${DisplayAcceptedMediaTypes[mediaType as MediaType]} file here`,
 								}}
 								onChange={(e) => {
-									if (e.target.files) setMediaFile(e.target.files[0]);
+									setMediaFile(e.target.files[0]);
 								}}
 							/>
 						)}
@@ -156,7 +226,7 @@ const MintPage: FunctionComponent = () => {
 				);
 			case 1:
 				return (
-					<Box pad={{ top: 'medium' }}>
+					<Box pad={{ top: 'small' }}>
 						<Box
 							border
 							round
@@ -164,13 +234,13 @@ const MintPage: FunctionComponent = () => {
 							alignSelf="center"
 							justify="center"
 							width="60%"
-							background="dark-1"
+							background="light-3"
 						>
 							<Heading level={3} margin="none">
 								Describe your NFT
 							</Heading>
 							<Paragraph>
-								Add a title and description for your NFT. Once minted these details cannot be
+								Add a title and description for the NFT. Once minted these details cannot be
 								changed.
 							</Paragraph>
 							<Box>
@@ -216,7 +286,7 @@ const MintPage: FunctionComponent = () => {
 				return (
 					<Box
 						pad={{
-							vertical: 'medium',
+							vertical: 'small',
 							horizontal: 'none',
 						}}
 						direction="row"
@@ -242,45 +312,42 @@ const MintPage: FunctionComponent = () => {
 									Set Price and Royalties
 								</Heading>
 								<Paragraph size="small">
-									Set Price, royalties and how many of this NFT you would like to mint. Once minted
-									these details cannot be changed.
+									Enter details about NFT
 								</Paragraph>
 								<Box margin={{ vertical: 'xsmall' }}>
 									<TextInput
-										type="number"
+										type="text"
 										focusIndicator={false}
-										icon={<div>$</div>}
-										placeholder="Price"
-										value={nftPrice}
-										onChange={(e) => setNftPrice(e.target.value)}
+										placeholder="Creator Name"
+										value={nftInfo.nftData?.creator ?? ""}
+										onChange={(e) => onSetNftData(e.target.value, "nftData.creator")}
 									/>
-									<SupportingMessage size="xsmall" alignSelf="center" visible={!empty(nftPrice)}>
-										0.55 ETH
-									</SupportingMessage>
 								</Box>
 								<Box margin={{ vertical: 'xsmall' }}>
-									<TextInput type="number" focusIndicator={false} placeholder="Royalty %" />
-									<SupportingMessage size="xsmall" alignSelf="center" visible>
-										The Moon also adds a 5% royalty on top of yours
-									</SupportingMessage>
+									<TextInput
+										type="text"
+										focusIndicator={false}
+										placeholder="Creator Profile"
+										value={nftInfo.nftData?.creatorProfile ?? ""}
+										onChange={(e) => onSetNftData(e.target.value, "nftData.creatorProfile")}
+									/>
 								</Box>
 								<Box margin={{ vertical: 'xsmall' }}>
 									<TextInput
 										type="number"
 										max={1000}
 										focusIndicator={false}
-										placeholder="Quantity"
+										placeholder="Quantity To Mint"
+										value={nftInfo.count ?? ""}
+										onChange={(e) => onSetNftData(e.target.value, "count")}
 									/>
-									<SupportingMessage size="xsmall" alignSelf="center" visible>
-										Only 1000 editions of an NFT can be minted at this time
-									</SupportingMessage>
 								</Box>
 								<Button
 									primary
 									label="Mint"
 									color="neutral-3"
 									margin="xsmall"
-									onClick={validateTitleOrDescriptionBeforeContinuing}
+									onClick={mintNft}
 								/>
 							</Box>
 						</FadeIn>
@@ -292,7 +359,7 @@ const MintPage: FunctionComponent = () => {
 	};
 
 	return (
-		<Box justify="center" fill>
+		<Box justify="start" fill>
 			{currentStep >= 0 && (
 				<FadeIn>
 					<Stepper activeStep={currentStep}>
@@ -308,9 +375,6 @@ const MintPage: FunctionComponent = () => {
 					<Box
 						justify="center"
 						direction="column"
-						margin={{
-							top: '20px',
-						}}
 					>
 						{renderStep(currentStep)}
 					</Box>

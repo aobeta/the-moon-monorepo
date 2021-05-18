@@ -5,7 +5,7 @@ import { MediaType } from '../types/media';
 import VideoElement from './media/videoElement';
 
 interface Props {
-  mediaFile: File;
+  mediaFile: File | string;
   mediaType: MediaType;
   title: string;
   supply?: number;
@@ -18,6 +18,11 @@ const NFTCard: FunctionComponent<Props> = (props: Props) => {
 
   useEffect(() => {
     if (mediaFile == null) {
+      return;
+    }
+
+    if(typeof mediaFile == "string") {
+      setFileSource(mediaFile);
       return;
     }
 
@@ -45,7 +50,7 @@ const NFTCard: FunctionComponent<Props> = (props: Props) => {
         <CardBody>
           {mediaType === MediaType.Image && <Image fit="cover" src={fileSource} />}
           {mediaType === MediaType.Video && (
-            <VideoElement videoFile={mediaFile} customWidth={350} />
+            <VideoElement videoFile={mediaFile as File} customWidth={350} />
           )}
         </CardBody>
         <CardFooter pad="medium" direction="row" gap="xxsmall">

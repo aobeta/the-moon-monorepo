@@ -1,7 +1,8 @@
 import { Box, Grommet, grommet, Main, ThemeType } from "grommet";
 import React, { FunctionComponent } from "react";
 import SideBar from "./sidebar";
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
+import { Toaster } from 'react-hot-toast';
 
 const Layout : FunctionComponent = ({ children }) => {
     return (
@@ -11,13 +12,21 @@ const Layout : FunctionComponent = ({ children }) => {
         >
             <Box direction="row" height={{ min: '100%' }}>
                 <SideBar />
-                <Main pad="xsmall">
+                <FullMain pad="xsmall" height="xxlarge">
                     {children}
-                </Main>
+                </FullMain>
             </Box>
+            <Toaster
+                position="bottom-right"
+                reverseOrder={false}
+            />
         </Grommet>
     )
 };
+
+const FullMain = styled(Main)`
+    height: 100vh;
+`;
 
 const extendedGrommetTheme : ThemeType = {
     ...grommet,

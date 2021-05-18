@@ -24,7 +24,7 @@ const SideBar : FunctionComponent = () => {
                 <Link href="/">
                     <Anchor href="/">Mint NFT</Anchor>
                 </Link>
-                <Link href="/test">
+                <Link href="/showNfts">
                     <Anchor href="/">Minted NFT's</Anchor>
                 </Link>
             </Nav>
