@@ -358,24 +358,22 @@ const MintPage: FunctionComponent = () => {
 	return (
 		<Box justify="start" fill>
 			{currentStep >= 0 && (
-				<FadeIn>
+				<Box>
 					<Stepper activeStep={currentStep}>
 						{steps.map((stepLabel, step) => (
 							<Step key={stepLabel} label={stepLabel} onClick={() => goToStep(step)} />
 						))}
 					</Stepper>
 					{renderStep(currentStep)}
-				</FadeIn>
+				</Box>
 			)}
 			{currentStep < 0 && (
-				<FadeIn>
-					<Box
-						justify="center"
-						direction="column"
-					>
-						{renderStep(currentStep)}
-					</Box>
-				</FadeIn>
+				<Box
+					justify="center"
+					direction="column"
+				>
+					{renderStep(currentStep)}
+				</Box>
 			)}
 		</Box>
 	);

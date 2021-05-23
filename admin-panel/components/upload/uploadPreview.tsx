@@ -62,7 +62,7 @@ const UploadPreview: FunctionComponent<Props> = (props: Props) => {
   };
 
   return (
-    <Box pad="large" justify="center" alignSelf="center" fill={true}>
+    <Box pad="large" justify="center" alignSelf="end" fill={true} margin={{ top : "20%" }}>
       {renderMedia()}
       <Box width="medium" alignSelf="center">
         <Button primary label="Use File" color="brand" margin="medium" onClick={onAccept} />
@@ -74,7 +74,7 @@ const UploadPreview: FunctionComponent<Props> = (props: Props) => {
 
 const ImageBox = styled(Image)`
   border-radius: 5px;
-  max-width: 400px;
+  max-width: 300px;
 `;
 
 export default UploadPreview;
