@@ -27,6 +27,12 @@ const SideBar : FunctionComponent = () => {
                 <Link href="/showNfts">
                     <Anchor href="/">Minted NFT's</Anchor>
                 </Link>
+                <Link href="/create-pack">
+                    <Anchor href="/">Create Pack</Anchor>
+                </Link>
+                <Link href="/show-packs">
+                    <Anchor href="/">Packs Created</Anchor>
+                </Link>
             </Nav>
         </GrommetSideBar>
     )

@@ -1,8 +1,8 @@
 import { Box, Image, Card, CardBody, CardFooter, Text } from 'grommet';
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { MediaType } from '../types/media';
-import VideoElement from './media/videoElement';
+import { MediaType } from '../../types/media';
+import VideoElement from '../media/videoElement';
 
 interface Props {
   mediaFile: File | string;
@@ -44,7 +44,6 @@ const NFTCard: FunctionComponent<Props> = (props: Props) => {
       }}
       width="medium"
       pad="10px"
-      margin={{ horizontal: '40px' }}
     >
       <Card round="2px" pad="10px" background="light-6">
         <CardBody>
@@ -81,7 +80,7 @@ const NFTCard: FunctionComponent<Props> = (props: Props) => {
 
 const CardContainer = styled(Box)`
   transform: scale(0.85);
-  box-shadow: 60px 82px 56px #1a1a1a;
+  box-shadow: 28px 28px 40px #1a1a1a;
   animation: hoverCard 1s ease-in-out 0s infinite alternate;
 `;
 

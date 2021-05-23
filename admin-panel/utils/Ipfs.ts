@@ -15,3 +15,7 @@ export const uploadFileToIPFS = async (file: File) : Promise<string> => {
 
     return data.IpfsHash as string;
 }
+
+export const getUrlFromIpfsHash = (hash: string) => {
+    return `https://ipfs.io/ipfs/${hash}`;
+}

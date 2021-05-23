@@ -2,8 +2,9 @@
 
 import { NextApiRequest, NextApiResponse } from "next";
 import { mintMoonNft } from "@aobeta/flow-lib/transactions/server";
-import { MintMoonNftData, AuthAccountDetails } from "@aobeta/flow-lib/transactions/server/mintMoonNft";
+import { MintMoonNftData } from "@aobeta/flow-lib/transactions/server/mintMoonNft";
 import * as uuid from "uuid";
+import { AuthAccountDetails } from "@aobeta/flow-lib/types/AuthAccount";
 
 export default async (req : NextApiRequest, res: NextApiResponse) => {
   const body = req.body as MintMoonNftData;

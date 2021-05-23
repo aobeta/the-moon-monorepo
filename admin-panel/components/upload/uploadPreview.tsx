@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 interface Props {
   file: File;
   mediaType: MediaType;
+  acceptAny?: boolean;
   onClear: () => void;
   onAccept: () => void;
 }
@@ -19,12 +20,12 @@ const AcceptedMediaTypes: Record<MediaType, string[]> = {
 };
 
 const UploadPreview: FunctionComponent<Props> = (props: Props) => {
-  const { file, onAccept, onClear, mediaType } = props;
+  const { file, onAccept, onClear, mediaType, acceptAny = false } = props;
 
   const [fileSource, setFileSource] = useState<string>();
 
   useEffect(() => {
-    verifyFileInput(file);
+    if (verifyFileInput(file) === false) return;
 
     if (mediaType === MediaType.Image) {
       const fileReader = new FileReader();
@@ -40,11 +41,13 @@ const UploadPreview: FunctionComponent<Props> = (props: Props) => {
   const verifyFileInput = (file: File) => {
     const acceptedMediaTypes: string[] = AcceptedMediaTypes[mediaType];
 
-    if (!acceptedMediaTypes.includes(file.type)) {
+    if (!acceptedMediaTypes.includes(file.type) && !acceptAny) {
       toast.error(`Please Upload only ${DisplayAcceptedMediaTypes[mediaType]} file.`);
       onClear();
-      return;
+      return false;
     }
+
+    return true;
   };
 
   const renderMedia = () => {

@@ -19,14 +19,14 @@ import styled from 'styled-components';
 import empty from 'lodash/isEmpty';
 import { DisplayAcceptedMediaTypes, MediaType } from '../types/media';
 import UploadPreview from '../components/upload/uploadPreview';
-import NFTCard from '../components/nftCard';
+import NFTCard from '../components/nft/nftCard';
 import { useRouter } from 'next/router';
 import { withQueryParams } from '../utils/queryParams';
 import axios from 'axios';
 import { MintMoonNftData } from "@aobeta/flow-lib/transactions/server/mintMoonNft";
 import set from 'lodash/set';
 import isEmpty from 'lodash/isEmpty';
-import {uploadFileToIPFS} from '../utils/upload';
+import {getUrlFromIpfsHash, uploadFileToIPFS} from '../utils/Ipfs';
 
 const validateMediaType = (type: string | MediaType) => {
 	switch (type) {
@@ -142,7 +142,7 @@ const MintPage: FunctionComponent = () => {
 		set(nftInfoToSubmit, "nftData.metadata", metadata);
 		const fileIpfsHash = await uploadFileToIPFS(mediaFile);
 
-		const mediaUrl = `https://ipfs.io/ipfs/${fileIpfsHash}`;
+		const mediaUrl = getUrlFromIpfsHash(fileIpfsHash);
 
 		set(nftInfoToSubmit, "nftData.mediaUrl", mediaUrl);
 
@@ -150,6 +150,7 @@ const MintPage: FunctionComponent = () => {
 		  .then(response => console.log("response data : ", response.data));
 
 		alert("NFT Minted !");
+		push('/showNfts');
 	}
 
 	useEffect(() => {
@@ -160,10 +161,6 @@ const MintPage: FunctionComponent = () => {
 			setCurrentStep(-1);
 		}
 	}, [query.mediaType]);
-
-	useEffect(() => {
-		console.log("JWT :: ", process.env.NEXT_PUBLIC_PINATA_JWT);
-	}, [])
 
 	const renderStep = (step: number) => {
 		switch (step) {
