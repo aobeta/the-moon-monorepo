@@ -11,7 +11,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		res.status(200).json(nftGroups);
 	} catch (error) {
 		res.status(500).json({
-			error,
+			error: error.message,
 			moonPlatformAddress,
 			flowNode,
 		});
