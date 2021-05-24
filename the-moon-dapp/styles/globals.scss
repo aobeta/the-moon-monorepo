@@ -4,6 +4,8 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
 
+@import url('@pathofdev/react-tag-input/build/index.css');
+
 @font-face {
   font-family: 'Bello Script';
   src: url(/fonts/Bello-Script.ttf);
@@ -51,4 +53,11 @@ a {
 .scripted-text {
   font-family: 'Bello Script', Brush Script MT;
   color: colors.$wheat;
+}
+
+.react-tag-input {
+  border: 1px solid WHEAT;
+  border-radius: 4px;
+  background: none;
+  padding: 10px;
 }

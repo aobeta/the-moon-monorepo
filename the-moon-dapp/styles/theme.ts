@@ -40,6 +40,7 @@ export const theme: ThemeType = {
 			control: {
 				dark: 'brand',
 			},
+			selected: Colors[GREY_10],
 		},
 		focus: { border: { color: 'dark' } },
 	},
