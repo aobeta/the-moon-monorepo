@@ -18,7 +18,7 @@ const Home: FunctionComponent = () => {
 			<StyledHeading color="brand" level="1" alignSelf="center">
 				Featured Packs
 			</StyledHeading>
-			<Box fill direction="row">
+			<Box margin={{ top: 'large' }} fill direction="row" justify="center">
 				{packs.map((pack) => (
 					<Box key={pack.id} align="center">
 						<Image src={pack.previewMediaUrl} style={{ width: '200px' }} />
