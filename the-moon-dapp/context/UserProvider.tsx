@@ -1,6 +1,6 @@
 import { User } from '@aobeta/db-model/prisma';
 import axios from 'axios';
-import { Provider, useSession } from 'next-auth/client';
+import { Provider as AuthProvider, useSession } from 'next-auth/client';
 import { createContext, FunctionComponent, useContext, useEffect, useState } from 'react';
 
 interface UserState {
@@ -38,12 +38,6 @@ const UserProviderInner: FunctionComponent = ({ children }) => {
 		}
 	}, [session, isLoadingSession]);
 
-	useEffect(() => {
-		axios.get('/api/user/test').then((response) => {
-			console.log('TEST CREATE USER :: ', response.data);
-		});
-	}, []);
-
 	return (
 		<UserContext.Provider
 			value={{
@@ -57,9 +51,9 @@ const UserProviderInner: FunctionComponent = ({ children }) => {
 };
 
 const UserProvider: FunctionComponent = ({ children }) => (
-	<Provider>
+	<AuthProvider>
 		<UserProviderInner>{children}</UserProviderInner>
-	</Provider>
+	</AuthProvider>
 );
 
 export const useUser = () => {

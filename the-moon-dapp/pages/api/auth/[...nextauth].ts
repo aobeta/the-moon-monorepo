@@ -1,6 +1,13 @@
 import NextAuth, { Profile } from 'next-auth';
 import Providers from 'next-auth/providers';
 import UserRepository from '@aobeta/db-model/repositories/UserRepository';
+import { PrismaClient } from '@aobeta/db-model/prisma';
+
+const userRepository = new UserRepository(new PrismaClient());
+
+const clientId = process.env.AUTH0_CLIENT_ID as string;
+const clientSecret = process.env.AUTH0_CLIENT_SECRET as string;
+const domain = process.env.AUTH0_DOMAIN as string;
 
 interface MoonProfile extends Profile {
 	email: string;
@@ -12,9 +19,9 @@ interface MoonProfile extends Profile {
 export default NextAuth({
 	providers: [
 		Providers.Auth0({
-			clientId: 'X7FX9FBPCb6pPfnafGTx5fB4gFPKGlIL',
-			clientSecret: 'uGD4qThPxzx3myuwTRDZRKAy0DuSNq6y-3UYlqB2rf10ZxbI0rvcw17tZixae2gB',
-			domain: 'getmoons.us.auth0.com',
+			clientId: clientId,
+			clientSecret: clientSecret,
+			domain: domain,
 			idToken: true,
 		}),
 	],
@@ -27,7 +34,7 @@ export default NextAuth({
 		},
 		async signIn(user, account, profile: MoonProfile) {
 			// console.log('SIGN IN :: ', user, account, profile);
-			await UserRepository.findOrCreateUser(user.id as string, profile);
+			await userRepository.findOrCreateUser(user.id as string, profile);
 			return true;
 		},
 	},

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@aobeta/db-model": "^0.0.8",
+    "@aobeta/flow-lib": "^0.0.18",
     "@pathofdev/react-tag-input": "^1.0.7",
     "axios": "^0.21.1",
     "grommet": "^2.17.1",

@@ -21,8 +21,6 @@ import { useUser } from '../../context/UserProvider';
 const Header: FunctionComponent = () => {
 	const { user, resolving: resolvingUser } = useUser();
 
-	console.log('session :: ', user, resolvingUser);
-
 	const renderAvatar = () => {
 		if (user == null) return;
 
@@ -113,7 +111,7 @@ const Header: FunctionComponent = () => {
 };
 
 const LogoBrand = styled(Anchor)`
-	font-family: 'Bello Script';
+	font-family: 'Parisienne';
 	text-decoration: none !important;
 	font-size: 1.75rem;
 	color: ${Colors[Color.WHEAT]};

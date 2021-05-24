@@ -3,9 +3,11 @@ import { ComponentType, FunctionComponent } from 'react';
 import Layout from '../components/layout/layout';
 import '../styles/globals.scss';
 import UserProvider from '../context/UserProvider';
+import loadConfig from '../utils/loadConfig';
 
 const DEFAULT_PAGE_TITLE = 'The Moon';
 
+loadConfig();
 interface AppProps {
 	Component: ComponentType;
 	pageProps: Record<string, string>;
