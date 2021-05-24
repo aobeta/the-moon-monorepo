@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Box, Button, FileInput, Heading, Text, TextArea, Image, Paragraph } from "grommet";
+import { Box, Button, FileInput, Heading, Text, TextArea, Image, Paragraph, Spinner } from "grommet";
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { Stepper, Step } from 'react-form-stepper';
 import styled from "styled-components";
@@ -25,6 +25,7 @@ const CreatePackPage : FunctionComponent = () => {
 
     const [previewImageFile, setPreviewImageFile] = useState<File>();
     const [previewImageSource, setPreviewImageSource] = useState<string>();
+    const [publishBtnDisabled, setPublishBtnDisabled] = useState<boolean>(false);
 
     const { push } = useRouter();
 
@@ -72,6 +73,7 @@ const CreatePackPage : FunctionComponent = () => {
             description
         };
 
+        setPublishBtnDisabled(true);
         const { data } = await axios.post('/api/nft/publish/pack', { groupIds, packData });
         console.log('publish response : ', data);
         alert('Nft Pack published !');
@@ -176,10 +178,12 @@ const CreatePackPage : FunctionComponent = () => {
                         </Paragraph>
                         <Button
                             primary
+                            disabled={publishBtnDisabled}
                             onClick={publishPack}
                             margin="medium"
                             label="Publish"
                         />
+                        {publishBtnDisabled && <Spinner size="medium" alignSelf="center"/>}
                     </Box>
                 );
             default:

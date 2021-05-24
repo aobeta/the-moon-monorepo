@@ -6,6 +6,7 @@ import {
 	FileInput,
 	Heading,
 	Paragraph,
+	Spinner,
 	Text,
 	TextArea,
 	TextExtendedProps,
@@ -56,6 +57,7 @@ const MintPage: FunctionComponent = () => {
 	const [description, setDescription] = useState<string>('');
 	const [errorText, setErrorText] = useState<string>();
 	const [nftInfo, setNftInfo] = useState<Partial<MintMoonNftData>>({});
+	const [mintBtnDisabled, setMintBtnDisabled] = useState<boolean>(false);
 
 	const { pathname, push, query } = useRouter();
 
@@ -146,6 +148,7 @@ const MintPage: FunctionComponent = () => {
 
 		set(nftInfoToSubmit, "nftData.mediaUrl", mediaUrl);
 
+		setMintBtnDisabled(true);
 		await axios.post('/api/nft/mint', nftInfoToSubmit)
 		  .then(response => console.log("response data : ", response.data));
 
@@ -341,11 +344,13 @@ const MintPage: FunctionComponent = () => {
 								</Box>
 								<Button
 									primary
+									disabled={mintBtnDisabled}
 									label="Mint"
 									color="neutral-3"
 									margin="xsmall"
 									onClick={mintNft}
 								/>
+								{mintBtnDisabled && <Spinner size="medium" alignSelf="center"/>}
 							</Box>
 						</FadeIn>
 					</Box>
