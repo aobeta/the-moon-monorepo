@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
-import { Box, TextInput, Select } from 'grommet';
+import { Box, Select, Text } from 'grommet';
+import styled from 'styled-components';
 import ReactTagInput from '@pathofdev/react-tag-input';
-import '@pathofdev/react-tag-input/build/index.css';
 
 const Filter: FunctionComponent = () => {
   return (
@@ -16,23 +16,33 @@ const Filter: FunctionComponent = () => {
         right: '100px',
       }}
     >
-      <div>Clear</div>
+      <UppercaseButton>Clear</UppercaseButton>
       <Box direction="row" justify="between">
         <Box>
-          <span>Influencer</span>
+          <BoldText>Influencer</BoldText>
           <ReactTagInput tags={['Jane Doe']} onChange={() => ['tom']} />
         </Box>
         <Box>
-          <span>Type</span>
+          <BoldText>Type</BoldText>
           <ReactTagInput tags={['Ass']} onChange={() => []} />
         </Box>
         <Box>
-          <span>Rarity</span>
+          <BoldText>Rarity</BoldText>
           <Select options={['Rarity']} value="Rarity" />
         </Box>
       </Box>
     </Box>
   );
 };
+
+const BoldText = styled(Text)`
+  color: #f7f6c9;
+  font-size: 14px;
+  font-weight: bold;
+`;
+
+const UppercaseButton = styled(BoldText)`
+  text-transform: uppercase;
+`;
 
 export default Filter;

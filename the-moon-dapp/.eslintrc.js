@@ -39,7 +39,8 @@ module.exports = {
         // Why would you want unused vars?
         '@typescript-eslint/no-unused-vars': ['error'],
         'prettier/prettier': ['error', {}, { usePrettierrc: true }],
-        "react-hooks/exhaustive-deps": "off"
+        'react-hooks/exhaustive-deps': 'off',
+        '@typescript-eslint/explicit-module-boundary-types': 'off'
       },
     },
   ],

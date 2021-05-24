@@ -4,15 +4,21 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "debug": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
+    "@aobeta/db-model": "^0.0.8",
+    "@aobeta/flow-lib": "^0.0.18",
     "@pathofdev/react-tag-input": "^1.0.7",
+    "axios": "^0.21.1",
     "grommet": "^2.17.1",
     "grommet-icons": "^4.5.0",
+    "http-codes": "^1.0.0",
     "lodash": "^4.17.21",
     "next": "^10.2.0",
+    "next-auth": "^3.16.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-fade-in": "^2.0.1",
@@ -20,9 +26,11 @@
     "react-hot-toast": "^1.0.2",
     "react-is": "^17.0.2",
     "sass": "^1.32.8",
-    "styled-components": "^5.3.0"
+    "styled-components": "^5.3.0",
+    "unique-names-generator": "^4.4.0"
   },
   "devDependencies": {
+    "@types/http-codes": "^1.0.1",
     "@types/lodash": "^4.14.168",
     "@types/react": "^17.0.3",
     "@types/styled-components": "^5.1.9",
@@ -35,6 +43,7 @@
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.2.1",
+    "sass": "^1.32.11",
     "typescript": "^4.2.3"
   }
 }
