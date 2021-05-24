@@ -5,15 +5,15 @@ import { mintMoonNft } from "@aobeta/flow-lib/transactions/server";
 import { MintMoonNftData } from "@aobeta/flow-lib/transactions/server/mintMoonNft";
 import * as uuid from "uuid";
 import { AuthAccountDetails } from "@aobeta/flow-lib/types/AuthAccount";
+import loadConfig from "../../../utils/loadConfig";
 
 export default async (req : NextApiRequest, res: NextApiResponse) => {
+  loadConfig()
   const body = req.body as MintMoonNftData;
   const data = {
     ...body,
     groupId : uuid.v4(),
   }
-
-  console.log("NFT DATA : ", data);
 
   const account : AuthAccountDetails = {
     privateKey: process.env.PRIVATE_KEY,

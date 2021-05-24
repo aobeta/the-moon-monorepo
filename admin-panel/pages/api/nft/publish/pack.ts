@@ -3,12 +3,15 @@ import { PublishNftData } from "@aobeta/flow-lib/transactions/server/publishNftP
 import { NextApiRequest, NextApiResponse } from "next";
 import { GroupNftData } from "../../../../types/nft";
 import { StatusCodes } from 'http-status-codes';
+import loadConfig from "../../../../utils/loadConfig";
+
 
 const {
     OK
 } = StatusCodes;
 
 export default async (req : NextApiRequest, res: NextApiResponse) => {
+    loadConfig();
     // publishNftPack
     const data = req.body as PublishNftData;
 
