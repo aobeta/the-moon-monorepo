@@ -19,6 +19,7 @@ const SideBar : FunctionComponent = () => {
             background="accent-1"
             header={renderHeader()}
             justify = "center"
+            style={{ minWidth: '140px'}}
         >
             <Nav gap="small">
                 <Link href="/">

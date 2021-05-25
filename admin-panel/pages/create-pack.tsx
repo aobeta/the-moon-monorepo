@@ -107,7 +107,7 @@ const CreatePackPage : FunctionComponent = () => {
                             {selectedGroupings.length > 0 && <SelectedText margin={{ right: "small"}} alignSelf='center'>{selectedGroupings.length} Selected</SelectedText>}
                             {selectedGroupings.length > 0 && <Button primary onClick={() => incrementStep()} label="Continue"/>}
                         </Box>
-                        <Box direction="row">
+                        <Box direction="row" justify="start">
                             {nftGroupings.map(group => (
                                 <SelectionContainer
                                     selected={selectedGroupings.includes(group.groupId)}
@@ -192,7 +192,7 @@ const CreatePackPage : FunctionComponent = () => {
     }
 
     return (
-        <Box justify="start" fill>
+        <Box justify="start">
             <Stepper activeStep={currentStep}>
                 {steps.map((stepLabel, step) => (
                     <Step key={stepLabel} label={stepLabel} onClick={() => goToStep(step)} />
@@ -207,7 +207,7 @@ const SelectionContainer = styled.div<{selected : boolean}>`
     border: 2px solid ${props => props.selected ? '#62bfea' : '#ccc'};
     border-radius: 10px;
     cursor: pointer;
-    transform: scale(0.8);
+    height: max-content;
 
     &:hover {
         border-color: #62bfea;

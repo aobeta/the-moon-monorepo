@@ -42,7 +42,7 @@ const NFTCard: FunctionComponent<Props> = (props: Props) => {
         image: 'url(/stars.webp)',
         size: 'cover',
       }}
-      width="medium"
+      width="250px"
       pad="10px"
     >
       <Card round="2px" pad="10px" background="light-6">
