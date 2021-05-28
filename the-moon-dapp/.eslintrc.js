@@ -29,6 +29,7 @@ module.exports = {
       rules: {
         // We will use TypeScript's types for component props instead
         'react/prop-types': 'off',
+        'react/no-children-prop': 'off',
 
         // No need to import React when using Next.js
         'react/react-in-jsx-scope': 'off',
