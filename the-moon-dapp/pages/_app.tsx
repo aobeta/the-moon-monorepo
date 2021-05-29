@@ -3,11 +3,12 @@ import { ComponentType, FunctionComponent } from 'react';
 import Layout from '../components/layout/layout';
 import '../styles/globals.scss';
 import UserProvider from '../context/UserProvider';
+import { PageProps } from '../types/pageProps';
 
 const DEFAULT_PAGE_TITLE = 'The Moon';
 interface AppProps {
 	Component: ComponentType;
-	pageProps: Record<string, string>;
+	pageProps: PageProps<unknown>;
 }
 
 const MyApp: FunctionComponent<AppProps> = ({ Component, pageProps }) => {

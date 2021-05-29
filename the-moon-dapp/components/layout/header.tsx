@@ -16,7 +16,7 @@ import MoonLogoSvg from '../svg/moon_logo';
 import { NavLink } from '../underLineLink';
 import Link from 'next/link';
 import { Logout, Menu as MenuIcon, User, UserSettings } from 'grommet-icons';
-import { signIn, signOut } from 'next-auth/client';
+import { signIn } from 'next-auth/client';
 import { useUser } from '../../context/UserProvider';
 import FadeIn from 'react-fade-in';
 
@@ -61,12 +61,11 @@ const Header: FunctionComponent = () => {
 	const onSignOut = () => {
 		const params = new URLSearchParams({
 			callback: window.location.href,
-			fromProvider: String(false)
+			fromProvider: String(false),
 		});
 
 		window.location.href = `/api/signout?${params}`;
-		// signOut();
-	}
+	};
 
 	return (
 		<GrommetHeader
