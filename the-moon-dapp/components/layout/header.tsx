@@ -146,13 +146,13 @@ const Header: FunctionComponent = () => {
 											{renderAvatar('medium')}
 											<Text color="brand">@{user?.username}</Text>
 										</Box>
-										<Link href="/">
+										<Link href="/profile">
 											<SpacedAnchor>
 												<User color="brand" />
 												My Profile
 											</SpacedAnchor>
 										</Link>
-										<Link href="/">
+										<Link href="/user/account">
 											<SpacedAnchor>
 												<UserSettings color="brand" />
 												My Account
