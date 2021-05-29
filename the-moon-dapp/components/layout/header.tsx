@@ -57,8 +57,16 @@ const Header: FunctionComponent = () => {
 		setShowUserDropDown(false);
 	};
 
-	const onSignIn = () => signIn('auth0');
-	const onSignOut = () => signOut();
+	const onSignIn = () => signIn('auth0', { prompt: 'login' });
+	const onSignOut = () => {
+		const params = new URLSearchParams({
+			callback: window.location.href,
+			fromProvider: String(false)
+		});
+
+		window.location.href = `/api/signout?${params}`;
+		// signOut();
+	}
 
 	return (
 		<GrommetHeader
