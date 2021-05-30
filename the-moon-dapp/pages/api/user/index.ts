@@ -9,7 +9,7 @@ const userRepository = new UserRepository(new PrismaClient());
 
 async function handler(req: AuthenticatedRequest, res: NextApiResponse) {
 	const session = req.session;
-	const user = await userRepository.getUser(session.user.id);
+	const user = await userRepository.getUserProfileByAuthId(session.user.id);
 	res.status(OK).json(user);
 }
 

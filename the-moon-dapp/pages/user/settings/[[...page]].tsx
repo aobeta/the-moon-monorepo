@@ -9,6 +9,8 @@ import { PageProps } from '../../../types/pageProps';
 
 import { useUser } from '../../../context/UserProvider';
 import AccountSection from '../../../components/settings-page/AccountSection';
+import WalletSection from '../../../components/settings-page/WalletSection';
+import ProfileSection from '../../../components/settings-page/ProfileSection';
 
 enum SettingsPageSection {
 	Account = 'account',
@@ -30,7 +32,7 @@ const SettingsPage: FunctionComponent<PageProps<Props>> = (props) => {
 			case SettingsPageSection.Account:
 				return <AccountSection user={user} />;
 			case SettingsPageSection.Profile:
-				return <ProfileSection />;
+				return <ProfileSection user={user} />;
 			case SettingsPageSection.Wallet:
 				return <WalletSection />;
 			default:
@@ -64,14 +66,6 @@ const SettingsPage: FunctionComponent<PageProps<Props>> = (props) => {
 			</Box>
 		</Box>
 	);
-};
-
-const WalletSection: FunctionComponent = () => {
-	return <Box>Wallet Section</Box>;
-};
-
-const ProfileSection: FunctionComponent = () => {
-	return <Box>Profile Section</Box>;
 };
 
 const MenuLinks = styled.ul`

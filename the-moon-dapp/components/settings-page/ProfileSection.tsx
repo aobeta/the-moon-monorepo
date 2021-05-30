@@ -1,55 +1,41 @@
+import { Profile } from '@aobeta/db-model/prisma';
 import {
 	Box,
-	Button,
+	Form,
 	Card,
+	CardHeader,
 	CardBody,
 	CardFooter,
-	CardHeader,
-	Form,
 	FormField,
-	Text,
 	TextInput,
+	Text,
+	Button,
 } from 'grommet';
-import { User } from '@aobeta/db-model/prisma';
-import Skeleton from 'react-loading-skeleton';
-import pick from 'lodash/pick';
-import toast from 'react-hot-toast';
-import Loader from '../loading/loader';
-import { Color, Colors } from '../../styles/theme';
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useState } from 'react';
 import FadeIn from 'react-fade-in';
+import Skeleton from 'react-loading-skeleton';
+import { Color, Colors } from '../../styles/theme';
+import { UserProfile } from '../../types/user';
+import Loader from '../loading/loader';
+import UploadAvatar from '../upload/uploadAvatar';
 
-const DEFAULT_USER_STATE = {
-	username: '',
-	fullName: '',
-	email: '',
-};
+interface Props {
+	user: UserProfile | null;
+}
 
-const AccountSection: FunctionComponent<{ user: User | null }> = (props) => {
+const ProfileSection: FunctionComponent<Props> = (props) => {
 	const { user } = props;
-
-	const [userState, setUserState] = useState<Pick<User, 'username' | 'email'>>();
-	const [isSaving, setIsSaving] = useState<boolean>(false);
-
-	useEffect(() => {
-		if (user != null && userState == null) {
-			setUserState(pick(user, ['username', 'email']));
-		}
-	}, [user]);
-
+	const [profileState, setProfileState] = useState<Pick<Profile, 'name' | 'bio'>>();
 	const onSave = () => {
-		setIsSaving(true);
-		setTimeout(() => {
-			setIsSaving(false);
-			toast.success('Successfully saved account information');
-		}, 5000);
+		console.log('save');
 	};
 
+	const isSaving = false;
 	const userLoaded = user != null;
 	return (
 		<Box>
 			<FadeIn>
-				<Form value={userState ?? DEFAULT_USER_STATE} onChange={(value) => setUserState(value)}>
+				<Form>
 					<Card
 						elevation="none"
 						height="medium-large"
@@ -60,15 +46,26 @@ const AccountSection: FunctionComponent<{ user: User | null }> = (props) => {
 							<>
 								<CardHeader pad="medium">
 									<Text color="brand" size="large">
-										Account
+										Profile
 									</Text>
 								</CardHeader>
 								<CardBody pad="medium" gap="medium">
-									<FormField name="username" label="Username" contentProps={{ width: '80%' }}>
-										<TextInput size="small" width="10px" name="username" />
+									<Box>
+										<UploadAvatar imageUrl="" />
+									</Box>
+									<FormField
+										name="tagLine"
+										label="Tag Line (optional)"
+										contentProps={{ width: '80%' }}
+									>
+										<TextInput size="small" name="tagLine" />
 									</FormField>
-									<FormField name="email" label="Email" contentProps={{ width: '80%' }}>
-										<TextInput size="small" name="email" />
+									<FormField
+										name="fullName"
+										label="About Me (Optional)"
+										contentProps={{ width: '80%' }}
+									>
+										<TextInput size="small" name="fullName" />
 									</FormField>
 								</CardBody>
 								<CardFooter pad="medium" justify="end" background="dark-1">
@@ -106,4 +103,4 @@ const AccountSection: FunctionComponent<{ user: User | null }> = (props) => {
 	);
 };
 
-export default AccountSection;
+export default ProfileSection;

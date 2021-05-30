@@ -38,8 +38,8 @@ const Header: FunctionComponent = () => {
 		size = size ?? 'medium';
 		if (user == null) return;
 
-		if (user.profilePic) {
-			return <Avatar src={user.profilePic} size={size} alignSelf="center" margin="xsmall" />;
+		if (user.profile.avatar) {
+			return <Avatar src={user.profile.avatar} size={size} alignSelf="center" margin="xsmall" />;
 		} else {
 			return <Avatar src="/default_profile.png" size={size} alignSelf="center" margin="xsmall" />;
 		}
@@ -187,10 +187,6 @@ const AvatarButton = styled(Button)`
 	border-radius: 50%;
 	border: 1px solid ${Colors[Color.GREY_8]};
 	padding: 1px;
-
-	&:hover {
-		background-color: ${Colors[Color.GREY_3]};
-	}
 `;
 
 const UserDropDown = styled.div`
