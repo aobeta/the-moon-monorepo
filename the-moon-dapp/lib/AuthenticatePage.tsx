@@ -6,7 +6,7 @@ interface PageOptions {
 	redirect?: string;
 }
 
-function EnsurePageIsAuthenticated(pageOptions: PageOptions) {
+export function EnsurePageIsAuthenticatedServerSide(pageOptions: PageOptions) {
 	const { title, redirectIfNotAuthenticated, redirect } = pageOptions;
 
 	const getServerSideProps = async (context: GetSessionOptions) => {
@@ -34,4 +34,7 @@ function EnsurePageIsAuthenticated(pageOptions: PageOptions) {
 	};
 }
 
-export default EnsurePageIsAuthenticated;
+export async function isAuthenticatedServerSide(context: GetSessionOptions) {
+	const session = await getSession(context);
+	return session != null;
+}

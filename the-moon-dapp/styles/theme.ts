@@ -64,4 +64,10 @@ export const theme: ThemeType = {
 			outline: none;
 		`,
 	},
+	button: {
+		extend: css`
+			border-radius: 8px;
+			min-width: 84px;
+		`,
+	},
 };

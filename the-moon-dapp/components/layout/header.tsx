@@ -151,10 +151,10 @@ const Header: FunctionComponent = () => {
 												My Profile
 											</SpacedAnchor>
 										</Link>
-										<Link href="/user/account">
+										<Link href="/user/settings">
 											<SpacedAnchor>
 												<UserSettings color="brand" />
-												My Account
+												My Settings
 											</SpacedAnchor>
 										</Link>
 										<Divider />
@@ -203,6 +203,7 @@ const UserDropDown = styled.div`
 	flex-direction: column;
 	align-items: flex-start;
 	padding-bottom: 15px;
+	z-index: 2;
 `;
 
 const Divider = styled.div`

@@ -45,7 +45,7 @@ export const TabLink = styled(Anchor)<{ active?: boolean }>`
 		display: block;
 		height: 1px;
 		left: ${(props) => (props.active ? '0' : '50%')};
-		top: 20px;
+		top: 30px;
 		position: absolute;
 		background: ${Colors[Color.WHEAT]};
 		transition: width 0.3s ease 0s, left 0.3s ease 0s;
