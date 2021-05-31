@@ -50,6 +50,11 @@ a {
   100% { transform: translateY(-1px) scale(0.85);}
 }
 
+.scripted-text {
+  font-family: 'Bello Script', Brush Script MT;
+  color: colors.$wheat;
+}
+
 .react-tag-input {
   border: 1px solid WHEAT;
   border-radius: 4px;
