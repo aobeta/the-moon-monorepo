@@ -1,16 +1,30 @@
 import React, { FunctionComponent, useState } from 'react';
 import { Box, Button, Text, TextInput, Select } from 'grommet';
 import { Search as SearchIcon } from 'grommet-icons';
-import NFTCard from '../components/nftCard';
-import Filter from '../components/filter';
-import { MediaType } from '../types/media';
+import { useRouter } from 'next/router';
+import NFTCard from '../../components/nftCard';
+import Filter from '../../components/filter';
+import { MediaType } from '../../types/media';
 import styled from 'styled-components';
-import { Color, Colors } from '../styles/theme';
+import { Color, Colors } from '../../styles/theme';
 
 const Marketplace: FunctionComponent = () => {
   const [showFilter, setShowFilter] = useState(false);
 
+  const router = useRouter();
+
+  const handleCardClick = (title, mediaFile, mediaType) =>
+    router.push({
+      pathname: '/marketplace/card-details',
+      query: {
+        title,
+        mediaFile,
+        mediaType,
+      },
+    });
+
   const handleToggleFilter = () => setShowFilter(!showFilter);
+
   const data = [
     /** Images were deleted from reddit */
     // {
@@ -72,13 +86,15 @@ const Marketplace: FunctionComponent = () => {
       {showFilter && <Filter />}
       <Box wrap={true} justify="center" direction="row">
         {data.map(({ title, mediaFile, mediaType }, i) => (
-          <NFTCard
-            key={i}
-            title={title}
-            mediaFile={mediaFile}
-            mediaType={mediaType}
-            showMetaData={true}
-          />
+          <div key={i} onClick={() => handleCardClick(title, mediaFile, mediaType)}>
+            <NFTCard
+              key={i}
+              title={title}
+              mediaFile={mediaFile}
+              mediaType={mediaType}
+              showMetaData={true}
+            />
+          </div>
         ))}
       </Box>
     </>
