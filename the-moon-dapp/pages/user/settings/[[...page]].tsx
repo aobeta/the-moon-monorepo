@@ -54,11 +54,11 @@ const SettingsPage: FunctionComponent<PageProps<Props>> = (props) => {
 							<TabLink active={activeSection === SettingsPageSection.Wallet}>Wallet</TabLink>
 						</Link>
 					</li>
-					<li>
+					{/* <li>
 						<Link href="/user/settings/profile">
 							<TabLink active={activeSection === SettingsPageSection.Profile}>Profile</TabLink>
 						</Link>
-					</li>
+					</li> */}
 				</MenuLinks>
 			</Box>
 			<Box height="100%" fill pad={{ top: '60px' }}>

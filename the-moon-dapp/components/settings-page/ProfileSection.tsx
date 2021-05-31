@@ -1,4 +1,3 @@
-import { Profile } from '@aobeta/db-model/prisma';
 import {
 	Box,
 	Form,
@@ -11,7 +10,7 @@ import {
 	Text,
 	Button,
 } from 'grommet';
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent } from 'react';
 import FadeIn from 'react-fade-in';
 import Skeleton from 'react-loading-skeleton';
 import { Color, Colors } from '../../styles/theme';
@@ -25,7 +24,7 @@ interface Props {
 
 const ProfileSection: FunctionComponent<Props> = (props) => {
 	const { user } = props;
-	const [profileState, setProfileState] = useState<Pick<Profile, 'name' | 'bio'>>();
+	// const [profileState, setProfileState] = useState<Pick<Profile, 'name' | 'bio'>>();
 	const onSave = () => {
 		console.log('save');
 	};

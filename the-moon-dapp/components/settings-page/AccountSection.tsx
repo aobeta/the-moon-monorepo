@@ -68,7 +68,7 @@ const AccountSection: FunctionComponent<{ user: User | null }> = (props) => {
 										<TextInput size="small" width="10px" name="username" />
 									</FormField>
 									<FormField name="email" label="Email" contentProps={{ width: '80%' }}>
-										<TextInput size="small" name="email" />
+										<TextInput size="small" name="email" disabled />
 									</FormField>
 								</CardBody>
 								<CardFooter pad="medium" justify="end" background="dark-1">

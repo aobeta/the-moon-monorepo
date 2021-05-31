@@ -5,13 +5,15 @@ import { OK } from 'http-codes';
 
 const userRepository = new UserRepository(new PrismaClient());
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const user = await userRepository.creatUser('testAuthId', {
-		picture: 'testpic',
-		nickname: 'testNickName',
-		email: 'testEmail',
-		email_verified: true,
-	});
+interface Requestbody {
+	address: string;
+	userId: number;
+}
 
-	res.status(OK).json(user);
+// TODO protect API route
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+	const { address, userId } = req.body as Requestbody;
+	const wallet = await userRepository.registerNewWallet(userId, address);
+
+	res.status(OK).json(wallet);
 }

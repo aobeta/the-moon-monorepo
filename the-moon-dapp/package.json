@@ -9,8 +9,8 @@
     "start": "next start"
   },
   "dependencies": {
-    "@aobeta/db-model": "^0.0.12",
-    "@aobeta/flow-lib": "^0.0.18",
+    "@aobeta/db-model": "^0.0.16",
+    "@aobeta/flow-lib": "^0.0.26",
     "@pathofdev/react-tag-input": "^1.0.7",
     "axios": "^0.21.1",
     "cookie": "^0.4.1",
