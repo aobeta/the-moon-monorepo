@@ -5,8 +5,8 @@ There are two Next.js projects in this repo. The main project that is going to b
 
 ## Setup - the-moon-dapp
 1. Install postgres `brew install postgres`. Make sure you install version 13.2 or later.
-2. Install the flow cli `brew install flow-cli`. Clone this repo [here]() and follow the instructions for setting up your smart contracts to work with your local blockchain.
-3. Setup your database. You will need to clone [this]() repo and follow the [instructions]() for setting up your database. Make sure you use the same connection string here that you used in the other repo.
+2. Install the flow cli `brew install flow-cli`. Clone this repo [here](https://github.com/aobeta/flow-lib) and follow the instructions for setting up your smart contracts to work with your local blockchain.
+3. Setup your database. You will need to clone [this](https://github.com/aobeta/db-model) repo and follow the [instructions](https://github.com/aobeta/db-model/blob/main/README.md) for setting up your database. Make sure you use the same connection string here that you used in the other repo.
 4. set up an environment variable on your machine called `GITHUB_ACCESS_TOKEN`. You should have received this token. If not contact me.
 5. In order to setup this project you will need a .env file. Create a .env file in the project and add these settings:
 
