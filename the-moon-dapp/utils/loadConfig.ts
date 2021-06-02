@@ -11,6 +11,8 @@ const loadConfig = () => {
 export const loadClientConfig = () => {
 	initFlowConfigClient({
 		walletDiscroveryUrl: process.env.NEXT_PUBLIC_FLOW_WALLET_DISCOVERY_URL as string,
+		accessNode: process.env.NEXT_PUBLIC_FLOW_ACCESS_NODE as string,
+		platformSmartContractAddress: process.env.NEXT_PUBLIC_MOON_NFT_CONTRACT_ADDRESS as string,
 	});
 };
 

@@ -1,11 +1,28 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { Provider as AuthProvider, useSession } from 'next-auth/client';
 import { createContext, FunctionComponent, useContext, useEffect, useState } from 'react';
 import { UserProfile } from '../types/user';
 import { UserWallet } from '@aobeta/flow-lib/user';
 import toast from 'react-hot-toast';
 import { FlowWallet } from '@aobeta/db-model/prisma';
-// import { FlowWallet } from '@aobeta/db-model/prisma';
+
+const FLOW_ACCOUNT_ADDRESS = process.env.NEXT_PUBLIC_MOON_PLATFORM_ACCOUNT_ADDRESS as string;
+const FLOW_ACCOUNT_PUBLIC_KEY_ID = Number(process.env.NEXT_PUBLIC_MOON_ACCOUNT_PUBLIC_KEY_ID);
+
+const signingFunction = async (message: string) => {
+	console.log('message to sign... ', message);
+	const { data } = await axios.post<unknown, AxiosResponse<{ signedMessage: string }>>(
+		'/api/crypto/sign',
+		{
+			message,
+		},
+	);
+
+	const { signedMessage } = data;
+	console.log('message to sign... ', signedMessage);
+	return signedMessage;
+};
+
 interface UserState {
 	resolving: boolean;
 	user: UserProfile | null;
@@ -51,10 +68,8 @@ const UserProviderInner: FunctionComponent = ({ children }) => {
 		setUser(userProfile);
 
 		if (userProfile.wallet != null) {
-			console.log('INITIALIZING WALLET');
 			const wallet = new UserWallet(userProfile.wallet.address);
 			await wallet.onInitialized();
-			console.log('wallet logged In ?', wallet.isLoggedIn());
 			// TODO potentially show toast if user wallet is not initialized
 			setUserWallet(wallet);
 		}
@@ -64,18 +79,24 @@ const UserProviderInner: FunctionComponent = ({ children }) => {
 
 	const connectUserWallet = async () => {
 		const wallet = new UserWallet();
-		const userInfo = await wallet.signUp();
-		if (userInfo.loggedIn == null) {
+		const result = await wallet.signUp({
+			platformAccount: FLOW_ACCOUNT_ADDRESS,
+			accountPublicKeyId: FLOW_ACCOUNT_PUBLIC_KEY_ID,
+			signingFunction,
+		});
+		console.log('SIGN UP result :: ', result);
+
+		if (result.user.loggedIn == null) {
 			toast.error('Failed To Connect Wallet. Please Try again');
 			return null;
 		}
 
 		const { data } = await axios.post('/api/user/wallet', {
-			address: userInfo.addr,
+			address: result.user.addr,
 			userId: user?.id,
+			isInitialized: result.isInitialized,
 		});
 
-		console.log('wallet data :', data);
 		return data as FlowWallet;
 	};
 
