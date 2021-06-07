@@ -58,6 +58,7 @@ const Header: FunctionComponent = () => {
 	};
 
 	const onSignIn = () => signIn('auth0', { prompt: 'login' });
+
 	const onSignOut = () => {
 		const params = new URLSearchParams({
 			callback: window.location.href,
@@ -84,11 +85,14 @@ const Header: FunctionComponent = () => {
 					alignContent="center"
 					margin={{ horizontal: 'xlarge' }}
 				>
+					<Link href="/packs">
+						<NavLink label="Packs" />
+					</Link>
 					<Link href="/marketplace">
 						<NavLink href="#" label="Marketplace" />
 					</Link>
-					<Link href="/creators/mint">
-						<NavLink label="Mint" />
+					<Link href="/creators">
+						<NavLink label="Creators" />
 					</Link>
 				</Box>
 			</Box>
