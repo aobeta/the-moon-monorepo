@@ -69,7 +69,7 @@ const UserProviderInner: FunctionComponent = ({ children }) => {
 
 		if (userProfile.wallet != null) {
 			const wallet = new UserWallet(userProfile.wallet.address);
-			await wallet.onInitialized();
+			await wallet.onInitialized().catch((error) => console.log(error));
 			// TODO potentially show toast if user wallet is not initialized
 			setUserWallet(wallet);
 		}
@@ -84,7 +84,6 @@ const UserProviderInner: FunctionComponent = ({ children }) => {
 			accountPublicKeyId: FLOW_ACCOUNT_PUBLIC_KEY_ID,
 			signingFunction,
 		});
-		console.log('SIGN UP result :: ', result);
 
 		if (result.user.loggedIn == null) {
 			toast.error('Failed To Connect Wallet. Please Try again');
