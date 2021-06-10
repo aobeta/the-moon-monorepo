@@ -43,7 +43,9 @@ module.exports = {
         'prettier/prettier': ['error', {}, { usePrettierrc: true }],
         'react-hooks/exhaustive-deps': 'off',
         '@typescript-eslint/explicit-module-boundary-types': 'off',
-        '@typescript-eslint/no-namespace': 'off'
+        '@typescript-eslint/no-namespace': 'off',
+        'jsx-a11y/click-events-have-key-events': 'off',
+        'jsx-a11y/no-static-element-interactions': 'off',
       },
     },
   ],
