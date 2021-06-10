@@ -3,9 +3,9 @@ import { NextApiResponse } from 'next';
 import { authenticated, AuthenticatedRequest } from '../../../lib/middlewares/authenticated';
 import { httpGet } from '../../../lib/middlewares/methods';
 import UserRepository from '@aobeta/db-model/repositories/UserRepository';
-import { PrismaClient } from '@aobeta/db-model/prisma';
+import prisma from '../../../lib/prisma';
 
-const userRepository = new UserRepository(new PrismaClient());
+const userRepository = new UserRepository(prisma);
 
 async function handler(req: AuthenticatedRequest, res: NextApiResponse) {
 	const session = req.session;

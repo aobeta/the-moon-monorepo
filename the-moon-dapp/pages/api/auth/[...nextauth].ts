@@ -1,9 +1,9 @@
 import NextAuth, { Profile } from 'next-auth';
 import Providers from 'next-auth/providers';
 import UserRepository from '@aobeta/db-model/repositories/UserRepository';
-import { PrismaClient } from '@aobeta/db-model/prisma';
+import prisma from '../../../lib/prisma';
 
-const userRepository = new UserRepository(new PrismaClient());
+const userRepository = new UserRepository(prisma);
 
 const clientId = process.env.AUTH0_CLIENT_ID as string;
 const clientSecret = process.env.AUTH0_CLIENT_SECRET as string;

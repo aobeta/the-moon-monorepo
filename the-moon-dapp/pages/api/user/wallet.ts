@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import UserRepository from '@aobeta/db-model/repositories/UserRepository';
-import { PrismaClient } from '@aobeta/db-model/prisma';
 import { OK } from 'http-codes';
+import prisma from '../../../lib/prisma';
 
-const userRepository = new UserRepository(new PrismaClient());
+const userRepository = new UserRepository(prisma);
 
 interface Requestbody {
 	address: string;

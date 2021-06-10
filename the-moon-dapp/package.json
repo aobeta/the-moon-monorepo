@@ -9,7 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@aobeta/db-model": "^0.0.16",
+    "@aobeta/db-model": "^0.0.17",
     "@aobeta/flow-lib": "^0.0.30",
     "@pathofdev/react-tag-input": "^1.0.7",
     "axios": "^0.21.1",

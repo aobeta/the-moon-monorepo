@@ -42,7 +42,8 @@ module.exports = {
         '@typescript-eslint/no-unused-vars': ['error'],
         'prettier/prettier': ['error', {}, { usePrettierrc: true }],
         'react-hooks/exhaustive-deps': 'off',
-        '@typescript-eslint/explicit-module-boundary-types': 'off'
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+        '@typescript-eslint/no-namespace': 'off'
       },
     },
   ],
