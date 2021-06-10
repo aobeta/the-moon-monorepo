@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { Provider as AuthProvider, useSession } from 'next-auth/client';
-import { createContext, FunctionComponent, useContext, useEffect, useState } from 'react';
+import { createContext, FunctionComponent, useContext, useEffect, useMemo, useState } from 'react';
 import { UserProfile } from '../types/user';
 import { UserWallet } from '@aobeta/flow-lib/user';
 import toast from 'react-hot-toast';
@@ -26,6 +26,7 @@ const signingFunction = async (message: string) => {
 interface UserState {
 	resolving: boolean;
 	user: UserProfile | null;
+	isLoggedIn: boolean;
 	userWallet: UserWallet | null;
 	connectUserWallet: () => Promise<FlowWallet | null>;
 }
@@ -37,6 +38,7 @@ const stub = () => {
 const DEFAULT_USER_STATE = {
 	resolving: true,
 	user: null,
+	isLoggedIn: false,
 	userWallet: null,
 	connectUserWallet: stub,
 };
@@ -49,6 +51,8 @@ const UserProviderInner: FunctionComponent = ({ children }) => {
 	const [user, setUser] = useState<UserProfile | null>(null);
 	const [resolving, setResolving] = useState<boolean>(true);
 	const [userWallet, setUserWallet] = useState<UserWallet | null>(null);
+
+	const isLoggedIn = useMemo(() => user != null && !resolving, [user, resolving]);
 
 	useEffect(() => {
 		if (isLoadingSession) {
@@ -106,6 +110,7 @@ const UserProviderInner: FunctionComponent = ({ children }) => {
 				resolving,
 				userWallet,
 				connectUserWallet,
+				isLoggedIn,
 			}}
 		>
 			{children}

@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "clean": "rm -rf .next",
     "debug": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
-    "@aobeta/db-model": "^0.0.17",
+    "@aobeta/db-model": "^0.0.25",
     "@aobeta/flow-lib": "^0.0.30",
     "@pathofdev/react-tag-input": "^1.0.7",
     "axios": "^0.21.1",
