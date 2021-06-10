@@ -8,9 +8,9 @@ const Home: FunctionComponent = () => {
 	const [packs, setPacks] = useState<MoonNftPackData[]>([]);
 
 	useEffect(() => {
-		axios.get('/api/nft/packs').then(({ data }) => {
-			setPacks(data);
-		});
+		// axios.get('/api/nft/packs').then(({ data }) => {
+		// 	setPacks(data);
+		// });
 	}, []);
 
 	return (

@@ -6,16 +6,18 @@ export enum Color {
 	BACKGROUND_PRIMARY,
 	GREY_10,
 	GREY_8,
+	GREY_3,
 	WHEAT,
 	WHITE,
 }
 
-const { BACKGROUND_PRIMARY, GREY_10, GREY_8, WHEAT, WHITE } = Color;
+const { BACKGROUND_PRIMARY, GREY_10, GREY_8, GREY_3, WHEAT, WHITE } = Color;
 
 export const Colors = {
 	[WHEAT]: colors.wheat,
 	[GREY_10]: colors.grey10,
 	[GREY_8]: colors.grey8,
+	[GREY_3]: colors.grey3,
 	[WHITE]: colors.white,
 	[BACKGROUND_PRIMARY]: colors.backgroundPrimary,
 };
@@ -60,6 +62,12 @@ export const theme: ThemeType = {
 		extend: css`
 			box-shadow: none;
 			outline: none;
+		`,
+	},
+	button: {
+		extend: css`
+			border-radius: 8px;
+			min-width: 84px;
 		`,
 	},
 };

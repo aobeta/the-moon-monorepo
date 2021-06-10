@@ -29,6 +29,8 @@ module.exports = {
       rules: {
         // We will use TypeScript's types for component props instead
         'react/prop-types': 'off',
+        'react/no-children-prop': 'off',
+        'brace-style': ['off', 'stroustrup'],
 
         // No need to import React when using Next.js
         'react/react-in-jsx-scope': 'off',
@@ -40,7 +42,10 @@ module.exports = {
         '@typescript-eslint/no-unused-vars': ['error'],
         'prettier/prettier': ['error', {}, { usePrettierrc: true }],
         'react-hooks/exhaustive-deps': 'off',
-        '@typescript-eslint/explicit-module-boundary-types': 'off'
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+        '@typescript-eslint/no-namespace': 'off',
+        'jsx-a11y/click-events-have-key-events': 'off',
+        'jsx-a11y/no-static-element-interactions': 'off',
       },
     },
   ],
