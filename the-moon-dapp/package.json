@@ -7,10 +7,11 @@
     "clean": "rm -rf .next",
     "debug": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "seed:db": "seed-moon-db"
   },
   "dependencies": {
-    "@aobeta/db-model": "^0.0.26",
+    "@aobeta/db-model": "^0.0.28",
     "@aobeta/flow-lib": "^0.0.30",
     "@pathofdev/react-tag-input": "^1.0.7",
     "axios": "^0.21.1",
