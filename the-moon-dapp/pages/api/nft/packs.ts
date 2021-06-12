@@ -1,11 +1,12 @@
 import { getAllPacksForSale } from '@aobeta/flow-lib/scripts';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { DefaultHandler } from '../../../lib/middlewares/handlers';
 import loadConfig from '../../../utils/loadConfig';
 
 const moonPlatformAddress = process.env.MOON_PLATFORM_ACCOUNT_ADDRESS as string;
 const flowNode = process.env.FLOW_ACCESS_NODE as string;
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		loadConfig();
 		const nftGroups = await getAllPacksForSale(moonPlatformAddress, flowNode);
@@ -19,3 +20,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		});
 	}
 };
+
+export default DefaultHandler().get(handler);
