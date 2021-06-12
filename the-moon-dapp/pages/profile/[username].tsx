@@ -101,7 +101,7 @@ const ProfilePage: FunctionComponent<Props> = (props) => {
 					<Box direction="row" justify="center" margin="medium">
 						<Location color="brand" />
 						<Text margin={{ horizontal: 'medium' }} color="brand">
-							Canada
+							{profile.location}
 						</Text>
 					</Box>
 				)}
