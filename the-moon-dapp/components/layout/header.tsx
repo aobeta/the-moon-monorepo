@@ -55,6 +55,9 @@ const Header: FunctionComponent = () => {
 					<Link href="/creators/mint">
 						<NavLink label="Mint" />
 					</Link>
+					<Link href="/influencers">
+						<NavLink label="Influencers" />
+					</Link>
 				</Box>
 			</Box>
 			<ResponsiveContext.Consumer>
