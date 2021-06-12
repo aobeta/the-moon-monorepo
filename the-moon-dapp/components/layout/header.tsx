@@ -19,6 +19,13 @@ import { Logout, Menu as MenuIcon, User, UserSettings } from 'grommet-icons';
 import { signIn } from 'next-auth/client';
 import { useUser } from '../../context/UserProvider';
 import FadeIn from 'react-fade-in';
+import {
+	CREATORS_ROUTE,
+	MARKETPLACE_ROUTE,
+	PACKS_ROUTE,
+	PROFILE_ROUTE,
+	USER_ACCOUNT_SETTINGS_ROUTE,
+} from '../../Routes';
 
 const Header: FunctionComponent = () => {
 	const [showUserDropDown, setShowUserDropDown] = useState<boolean>(false);
@@ -85,13 +92,13 @@ const Header: FunctionComponent = () => {
 					alignContent="center"
 					margin={{ horizontal: 'xlarge' }}
 				>
-					<Link href="/packs">
+					<Link href={PACKS_ROUTE}>
 						<NavLink label="Packs" />
 					</Link>
-					<Link href="/marketplace">
+					<Link href={MARKETPLACE_ROUTE}>
 						<NavLink href="#" label="Marketplace" />
 					</Link>
-					<Link href="/creators">
+					<Link href={CREATORS_ROUTE}>
 						<NavLink label="Creators" />
 					</Link>
 				</Box>
@@ -107,11 +114,7 @@ const Header: FunctionComponent = () => {
 								items={[
 									{
 										label: <Box pad="small">MarketPlace</Box>,
-										href: '/marketplace',
-									},
-									{
-										label: <Box pad="small">Mint</Box>,
-										href: '/creators/mint',
+										href: MARKETPLACE_ROUTE,
 									},
 								]}
 							/>
@@ -149,13 +152,13 @@ const Header: FunctionComponent = () => {
 											{renderAvatar('medium')}
 											<Text color="brand">@{user?.username}</Text>
 										</Box>
-										<Link href="/profile">
+										<Link href={PROFILE_ROUTE`${user?.username ?? ''}`}>
 											<SpacedAnchor>
 												<User color="brand" />
 												My Profile
 											</SpacedAnchor>
 										</Link>
-										<Link href="/user/settings">
+										<Link href={USER_ACCOUNT_SETTINGS_ROUTE}>
 											<SpacedAnchor>
 												<UserSettings color="brand" />
 												My Settings

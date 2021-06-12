@@ -2,7 +2,7 @@ import { Box } from 'grommet';
 import { FunctionComponent } from 'react';
 
 const PacksPage: FunctionComponent = () => {
-	return <Box>Packs</Box>;
+	return <Box>Creators</Box>;
 };
 
 export default PacksPage;
