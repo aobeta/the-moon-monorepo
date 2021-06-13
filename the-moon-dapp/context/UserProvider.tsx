@@ -1,27 +1,14 @@
-import axios, { AxiosResponse } from 'axios';
 import { Provider as AuthProvider, useSession } from 'next-auth/client';
 import { createContext, FunctionComponent, useContext, useEffect, useMemo, useState } from 'react';
 import { UserProfile } from '../types/user';
 import { UserWallet } from '@aobeta/flow-lib/user';
 import toast from 'react-hot-toast';
 import { FlowWallet } from '@aobeta/db-model/prisma';
+import * as CryptoApi from '../api-clients/CryptoApi';
+import * as UserApi from '../api-clients/UserApi';
 
 const FLOW_ACCOUNT_ADDRESS = process.env.NEXT_PUBLIC_MOON_PLATFORM_ACCOUNT_ADDRESS as string;
 const FLOW_ACCOUNT_PUBLIC_KEY_ID = Number(process.env.NEXT_PUBLIC_MOON_ACCOUNT_PUBLIC_KEY_ID);
-
-const signingFunction = async (message: string) => {
-	console.log('message to sign... ', message);
-	const { data } = await axios.post<unknown, AxiosResponse<{ signedMessage: string }>>(
-		'/api/crypto/sign',
-		{
-			message,
-		},
-	);
-
-	const { signedMessage } = data;
-	console.log('message to sign... ', signedMessage);
-	return signedMessage;
-};
 
 interface UserState {
 	resolving: boolean;
@@ -61,7 +48,7 @@ const UserProviderInner: FunctionComponent = ({ children }) => {
 		} else {
 			if (session != null) {
 				// fetch user
-				axios.get('/api/user').then((response) => setUpUser(response.data));
+				UserApi.getLoggedInUserProfile().then((response) => setUpUser(response));
 			} else {
 				setResolving(false);
 			}
@@ -86,7 +73,7 @@ const UserProviderInner: FunctionComponent = ({ children }) => {
 		const result = await wallet.signUp({
 			platformAccount: FLOW_ACCOUNT_ADDRESS,
 			accountPublicKeyId: FLOW_ACCOUNT_PUBLIC_KEY_ID,
-			signingFunction,
+			signingFunction: CryptoApi.SignTransaction,
 		});
 
 		if (result.user.loggedIn == null) {
@@ -94,13 +81,13 @@ const UserProviderInner: FunctionComponent = ({ children }) => {
 			return null;
 		}
 
-		const { data } = await axios.post('/api/user/wallet', {
+		const submissionResult = await UserApi.submitUserWalletInitialization({
 			address: result.user.addr,
 			userId: user?.id,
 			isInitialized: result.isInitialized,
 		});
 
-		return data as FlowWallet;
+		return submissionResult;
 	};
 
 	return (
