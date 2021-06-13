@@ -84,24 +84,30 @@ const Header: FunctionComponent = () => {
 		>
 			<Box direction="row" alignContent="center">
 				<LogoBrand href="#" icon={<MoonLogoSvg />} label="The Moon" />
-				<Box
-					justify="end"
-					direction="row"
-					gap="medium"
-					alignSelf="center"
-					alignContent="center"
-					margin={{ horizontal: 'xlarge' }}
-				>
-					<Link href={PACKS_ROUTE}>
-						<NavLink label="Packs" />
-					</Link>
-					<Link href={MARKETPLACE_ROUTE}>
-						<NavLink href="#" label="Marketplace" />
-					</Link>
-					<Link href={CREATORS_ROUTE}>
-						<NavLink label="Creators" />
-					</Link>
-				</Box>
+				<ResponsiveContext.Consumer>
+					{(size) =>
+						size !== 'small' ? (
+							<Box
+								justify="end"
+								direction="row"
+								gap="2px"
+								alignSelf="center"
+								alignContent="center"
+								margin={{ horizontal: 'xlarge' }}
+							>
+								<Link href={PACKS_ROUTE}>
+									<NavLink label="Packs" />
+								</Link>
+								<Link href={MARKETPLACE_ROUTE}>
+									<NavLink href="#" label="Marketplace" />
+								</Link>
+								<Link href={CREATORS_ROUTE}>
+									<NavLink label="Creators" />
+								</Link>
+							</Box>
+						) : null
+					}
+				</ResponsiveContext.Consumer>
 			</Box>
 			<ResponsiveContext.Consumer>
 				{(size) =>
@@ -113,8 +119,16 @@ const Header: FunctionComponent = () => {
 								icon={<MenuIcon color="brand" />}
 								items={[
 									{
+										label: <Box pad="small">Packs</Box>,
+										href: PACKS_ROUTE,
+									},
+									{
 										label: <Box pad="small">MarketPlace</Box>,
 										href: MARKETPLACE_ROUTE,
+									},
+									{
+										label: <Box pad="small">Creators</Box>,
+										href: CREATORS_ROUTE,
 									},
 								]}
 							/>
@@ -148,7 +162,7 @@ const Header: FunctionComponent = () => {
 										onMouseEnter={showUserDropDownOnMouseOver}
 										onMouseLeave={hideUserDropDownOnMouseLeave}
 									>
-										<Box direction="row" align="center" pad="small" gap="small">
+										<Box direction="column" align="center" pad="small" gap="small">
 											{renderAvatar('medium')}
 											<Text color="brand">@{user?.username}</Text>
 										</Box>
@@ -187,6 +201,7 @@ const LogoBrand = styled(Anchor)`
 	text-decoration: none !important;
 	font-size: 1.75rem;
 	color: ${Colors[Color.WHEAT]};
+	white-space: nowrap;
 `;
 
 const AvatarButton = styled(Button)`
