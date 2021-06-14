@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Box, Button, Grid, Text, TextInput, Select } from 'grommet';
+import { Box, Button, Grid, Heading, Text, TextInput, Select } from 'grommet';
 import { Search as SearchIcon } from 'grommet-icons';
 import { useRouter } from 'next/router';
 import NFTCard from '../../components/nftCard';
@@ -49,27 +49,49 @@ const Marketplace: FunctionComponent = () => {
       mediaFile: 'https://i.redd.it/5g5y4dbtyms61.jpg',
       mediaType: MediaType.Image,
     },
-    {
-      title: 'test-title',
-      mediaFile: 'https://pbs.twimg.com/media/Cx8iU1WWEAAURRp.jpg',
-      mediaType: MediaType.Image,
-    },
+    // {
+    //   title: 'test-title',
+    //   mediaFile: 'https://pbs.twimg.com/media/Cx8iU1WWEAAURRp.jpg',
+    //   mediaType: MediaType.Image,
+    // },
   ];
   return (
     <>
     <Grid
-    rows={['full', 'full']}
+    rows={['xsmall', 'xsmall', 'xsmall','xsmall']}
     columns={['medium', 'medium', 'medium']}
-    gap="small"
     areas={[
-        { name: 'header', start: [0, 0], end: [1, 0] },
-        { name: 'nav', start: [0, 1], end: [0, 1] },
-        { name: 'main', start: [1, 1], end: [1, 1] },
+        { name: 'search', start: [2, 1], end: [2, 1] },
+        { name: 'fave_influencer', start: [0, 2], end: [1, 2] },     
+        { name: 'influencer1', start: [0, 3], end: [2, 3] },  
     ]}
     >
-    <Box gridArea="header" background="brand" />
-    <Box gridArea="nav" background="light-5" />
-    <Box gridArea="main" background="light-2" />
+        {/* <Box gridArea="header" background="brand" /> */}
+        <Box gridArea="search" fill align="center" justify="start" pad="medium">
+            <Box  width="medium" gap="medium" >
+                <TextInput
+                    placeholder="Search by name"
+                    icon={<SearchIcon color="brand" />}
+                    reverse={true}
+                />
+            </Box>
+        </Box>
+        <Box align="baseline" gridArea="fave_influencer" direction="row" justify="between" margin={{ top: '20px'}}>
+            <Heading margin="none">My Favourite Influencers</Heading>
+        </Box>
+        <Box gridArea="influencer1" wrap={true} direction="row">
+				{data.map(({ title, mediaFile, mediaType }, i) => (
+					<div key={i} onClick={() => handleCardClick(title, mediaFile, mediaType)}>
+						<NFTCard
+							key={i}
+							title={title}
+							mediaFile={mediaFile}
+							mediaType={mediaType}
+							showMetaData={true}
+						/>
+					</div>
+				))}
+			</Box>
     </Grid>
       {/* <Box
         align="center"
@@ -107,10 +129,8 @@ const Marketplace: FunctionComponent = () => {
 const Header = styled(Text)`
   font-family: 'Parisienne';
   text-decoration: none !important;
-  font-size: 64px;
+  font-size: 32px;
   align-self: center;
-  margin-top: 50px;
-  margin-bottom: 55px;
   color: ${Colors[Color.WHEAT]};
 `;
 
