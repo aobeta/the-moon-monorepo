@@ -55,7 +55,7 @@ const Creators: FunctionComponent = () => {
 		]}
 		>
 			<Box gridArea="search" fill align="center" justify="start" pad="medium" direction="row">
-				<Box  width="medium" gap="medium" >
+				<Box  width="medium" gap="medium" margin={{ right: '10px'}}>
 					<TextInput
 						placeholder="Search by name"
 						icon={<SearchIcon color="brand" />}
@@ -63,7 +63,7 @@ const Creators: FunctionComponent = () => {
 					/>
 				</Box>
 			</Box>
-			<Box align="baseline" gridArea="fave_influencer_heading" direction="row" justify="start" margin={{ left: '75px'}}>
+			<Box align="baseline" gridArea="fave_influencer_heading" direction="row" justify="start" margin={{ left: '90px'}}>
 				<Header margin="none">My Favourite Influencers</Header>
 			</Box>
 			<Box  gridArea="influencer1"  margin={{ left: '50px'}} justify="center"direction="row" border="bottom">
@@ -79,11 +79,11 @@ const Creators: FunctionComponent = () => {
           		</Box>
         		))}
 			</Box>
-			<Box align="baseline" gridArea="influencer_heading" direction="row" justify="start" margin={{ left: '150px'}}>
+			<Box width="large" align="baseline" gridArea="influencer_heading" direction="row" justify="start" margin={{ left: '90px'}}>
 				<Header margin="none">Influencers</Header>
 			</Box>
-			<Box gridArea="sort" fill align="center" justify="start">
-				<Box align="center" direction="row">
+			<Box gridArea="sort" fill align="center" justify="start" > 
+				<Box align="center" direction="row" margin={{ right: '35px'}}>
 					<SortText>Sort By</SortText>
 					<Select
 						options={['Most Assets', 'Most Collectibles', 'Most Likes']}
