@@ -63,12 +63,12 @@ const Creators: FunctionComponent = () => {
 					/>
 				</Box>
 			</Box>
-			<Box align="baseline" gridArea="fave_influencer_heading" direction="row" justify="start" margin={{ left: '50px'}}>
+			<Box align="baseline" gridArea="fave_influencer_heading" direction="row" justify="start" margin={{ left: '75px'}}>
 				<Header margin="none">My Favourite Influencers</Header>
 			</Box>
-			<Box wrap={true} gridArea="influencer1"  margin={{ left: '50px'}} justify="center"direction="row" border="bottom">
+			<Box  gridArea="influencer1"  margin={{ left: '50px'}} justify="center"direction="row" border="bottom">
 			{data.map(({ title, mediaFile, mediaType, numassets }, i) => (
-          		<div key={i}>
+          		<Box wrap={true} height="medium"key={i}>
             	<InfluencerThumbnails
               	key={i}
               	title={title}
@@ -76,10 +76,10 @@ const Creators: FunctionComponent = () => {
 				  numassets={numassets}
               	mediaType={mediaType}
             	/>
-          		</div>
+          		</Box>
         		))}
 			</Box>
-			<Box align="baseline" gridArea="influencer_heading" direction="row" justify="start" margin={{ left: '50px'}}>
+			<Box align="baseline" gridArea="influencer_heading" direction="row" justify="start" margin={{ left: '150px'}}>
 				<Header margin="none">Influencers</Header>
 			</Box>
 			<Box gridArea="sort" fill align="center" justify="start">
@@ -91,6 +91,19 @@ const Creators: FunctionComponent = () => {
 						onChange={({ option }) => setValue(option)}
 					/>
 				</Box>
+			</Box>
+			<Box  gridArea="influencer2"  margin={{ left: '50px'}} justify="center"direction="row">
+			{data.map(({ title, mediaFile, mediaType, numassets }, i) => (
+          		<Box wrap={true} height="medium"key={i}>
+            	<InfluencerThumbnails
+              	key={i}
+              	title={title}
+             	 mediaFile={mediaFile}
+				  numassets={numassets}
+              	mediaType={mediaType}
+            	/>
+          		</Box>
+        		))}
 			</Box>
 		</Grid>);
 };

@@ -39,10 +39,6 @@ const InfluencerThumbnails: FunctionComponent<Props>  = (props: Props) => {
 		<Box align="center">
 			<CardContainer
 				round="10px"
-				background={{
-					image: 'url(/stars.webp)',
-					size: 'cover',
-				}}
 				width="medium"
 				pad="10px"
 				margin={{ horizontal: '40px' }}
@@ -62,6 +58,9 @@ const InfluencerThumbnails: FunctionComponent<Props>  = (props: Props) => {
 							<Text alignSelf="start" style={{ fontSize: '20px', textTransform: 'uppercase' }}>
 								Rare
 							</Text>
+							<Text alignSelf="start" style={{ fontFamily: 'Moon Light', fontSize: '20px' }}>
+								{numassets}
+							</Text>
 						</Box>
 						<Box
 							background={{
@@ -80,8 +79,7 @@ const InfluencerThumbnails: FunctionComponent<Props>  = (props: Props) => {
 
 const CardContainer = styled(Box)`
 	transform: scale(0.85);
-	box-shadow: 60px 82px 56px #0d0d0d;
-	animation: hoverCard 1s ease-in-out 0s infinite alternate;
+
 `;
 
 export default InfluencerThumbnails;
