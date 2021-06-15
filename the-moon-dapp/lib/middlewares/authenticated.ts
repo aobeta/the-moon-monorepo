@@ -12,26 +12,24 @@ export interface UserSession extends Session {
 	};
 }
 
+// for requests where authentication is mandatory
 export interface AuthenticatedRequest extends NextApiRequest {
 	session: UserSession;
 }
 
+// for requests where authentication is optional
 export interface PotentiallyAuthenticatedRequest extends NextApiRequest {
 	session?: UserSession;
 }
 
 /**
- * Injects session into request object and then calls handler.
+ * Decorates request object with session details.
  * NOTE: session may still be null even after attempt to resolve it.
- * @param request
- * @param response
- * @param handler
- * @param session
+ * @param request - request object
+ * @param session - (optional) pass in session to decorate request object with. If not passed then an attempt to resolve the session will be made.
  */
-const injectSession = async (
+export const DecorateRequestWithSession = async (
 	request: NextApiRequest,
-	response: NextApiResponse,
-	handler: AuthenticatedHandler,
 	session?: UserSession,
 ) => {
 	let resolvedSession = session;
@@ -41,52 +39,29 @@ const injectSession = async (
 	// assign session on to request object
 	const authenticatedRequest = Object.assign(request, { session: resolvedSession });
 
-	if (handler.constructor.name === 'AsyncFunction') {
-		await handler(authenticatedRequest, response);
-	} else {
-		handler(authenticatedRequest, response);
-	}
+	return authenticatedRequest;
 };
 
-type AuthenticatedHandler =
-	| ((request: AuthenticatedRequest, response: NextApiResponse) => Promise<void> | void)
-	| ((request: PotentiallyAuthenticatedRequest, response: NextApiResponse) => Promise<void> | void);
-
 /**
- * Intercepts a request to make sure that it is authenticated. If the request is not authenticated then returns 401 UnAuthorized.
+ * Middleware that intercepts a request to make sure that it is authenticated. If the request is not authenticated then returns 401 UnAuthorized.
  * If the request is authenticated, then
  * @param handler function that will handle the request if it passes through check
  * @returns wrapped handler function that intercepts request.
  */
-export const authenticated = (
-	handler: (request: AuthenticatedRequest, response: NextApiResponse) => Promise<void> | void,
+export const AuthenticateRequestMiddleware = async (
+	request: NextApiRequest,
+	response: NextApiResponse,
+	next: () => void,
 ) => {
-	return async (request: NextApiRequest, response: NextApiResponse) => {
-		const session: UserSession | null = (await getSession({ req: request })) as UserSession;
+	const session: UserSession | null = (await getSession({ req: request })) as UserSession;
 
-		if (session == null) {
-			response.status(UNAUTHORIZED).json({ error: 'UnAuthorized' });
-			return;
-		}
+	if (session == null) {
+		response.status(UNAUTHORIZED).json({ error: 'UnAuthorized' });
+		return;
+	}
 
-		// assign session on to request object
-		await injectSession(request, response, handler, session);
-	};
-};
+	// assign session on to request object
+	await DecorateRequestWithSession(request, session);
 
-/**
- * Method that assigns session to request object.
- * @param handler handler function for request
- * @returns wrapped handler function that intercepts request.
- */
-export const withSession = (
-	handler: (
-		request: PotentiallyAuthenticatedRequest,
-		response: NextApiResponse,
-	) => Promise<void> | void,
-) => {
-	return async (request: NextApiRequest, response: NextApiResponse) => {
-		// assign session on to request object
-		await injectSession(request, response, handler);
-	};
+	next();
 };

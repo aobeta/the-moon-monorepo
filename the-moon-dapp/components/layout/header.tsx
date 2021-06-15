@@ -19,6 +19,13 @@ import { Logout, Menu as MenuIcon, User, UserSettings } from 'grommet-icons';
 import { signIn } from 'next-auth/client';
 import { useUser } from '../../context/UserProvider';
 import FadeIn from 'react-fade-in';
+import {
+	CREATORS_ROUTE,
+	MARKETPLACE_ROUTE,
+	PACKS_ROUTE,
+	PROFILE_ROUTE,
+	USER_ACCOUNT_SETTINGS_ROUTE,
+} from '../../Routes';
 
 const Header: FunctionComponent = () => {
 	const [showUserDropDown, setShowUserDropDown] = useState<boolean>(false);
@@ -77,27 +84,30 @@ const Header: FunctionComponent = () => {
 		>
 			<Box direction="row" alignContent="center">
 				<LogoBrand href="#" icon={<MoonLogoSvg />} label="The Moon" />
-				<Box
-					justify="end"
-					direction="row"
-					gap="medium"
-					alignSelf="center"
-					alignContent="center"
-					margin={{ horizontal: 'xlarge' }}
-				>
-					<Link href="/packs">
-						<NavLink label="Packs" />
-					</Link>
-					<Link href="/marketplace">
-						<NavLink href="#" label="Marketplace" />
-					</Link>
-					<Link href="/creators">
-						<NavLink label="Creators" />
-					</Link>
-					<Link href="/influencers">
-						<NavLink label="Influencers" />
-					</Link>
-				</Box>
+				<ResponsiveContext.Consumer>
+					{(size) =>
+						size !== 'small' ? (
+							<Box
+								justify="end"
+								direction="row"
+								gap="2px"
+								alignSelf="center"
+								alignContent="center"
+								margin={{ horizontal: 'xlarge' }}
+							>
+								<Link href={PACKS_ROUTE}>
+									<NavLink label="Packs" />
+								</Link>
+								<Link href={MARKETPLACE_ROUTE}>
+									<NavLink href="#" label="Marketplace" />
+								</Link>
+								<Link href={CREATORS_ROUTE}>
+									<NavLink label="Creators" />
+								</Link>
+							</Box>
+						) : null
+					}
+				</ResponsiveContext.Consumer>
 			</Box>
 			<ResponsiveContext.Consumer>
 				{(size) =>
@@ -109,12 +119,16 @@ const Header: FunctionComponent = () => {
 								icon={<MenuIcon color="brand" />}
 								items={[
 									{
-										label: <Box pad="small">MarketPlace</Box>,
-										href: '/marketplace',
+										label: <Box pad="small">Packs</Box>,
+										href: PACKS_ROUTE,
 									},
 									{
-										label: <Box pad="small">Mint</Box>,
-										href: '/creators/mint',
+										label: <Box pad="small">MarketPlace</Box>,
+										href: MARKETPLACE_ROUTE,
+									},
+									{
+										label: <Box pad="small">Creators</Box>,
+										href: CREATORS_ROUTE,
 									},
 								]}
 							/>
@@ -148,17 +162,17 @@ const Header: FunctionComponent = () => {
 										onMouseEnter={showUserDropDownOnMouseOver}
 										onMouseLeave={hideUserDropDownOnMouseLeave}
 									>
-										<Box direction="row" align="center" pad="small" gap="small">
+										<Box direction="column" align="center" pad="small" gap="small">
 											{renderAvatar('medium')}
 											<Text color="brand">@{user?.username}</Text>
 										</Box>
-										<Link href="/profile">
+										<Link href={PROFILE_ROUTE`${user?.username ?? ''}`}>
 											<SpacedAnchor>
 												<User color="brand" />
 												My Profile
 											</SpacedAnchor>
 										</Link>
-										<Link href="/user/settings">
+										<Link href={USER_ACCOUNT_SETTINGS_ROUTE}>
 											<SpacedAnchor>
 												<UserSettings color="brand" />
 												My Settings
@@ -187,6 +201,7 @@ const LogoBrand = styled(Anchor)`
 	text-decoration: none !important;
 	font-size: 1.75rem;
 	color: ${Colors[Color.WHEAT]};
+	white-space: nowrap;
 `;
 
 const AvatarButton = styled(Button)`
@@ -218,7 +233,6 @@ const Divider = styled.div`
 const SpacedAnchor = styled(Anchor)`
 	margin: 10px 0 10px 22px;
 	display: flex;
-
 	> svg {
 		margin-right: 15px;
 	}

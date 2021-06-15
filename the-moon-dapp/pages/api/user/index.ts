@@ -1,9 +1,9 @@
 import { OK } from 'http-codes';
 import { NextApiResponse } from 'next';
-import { authenticated, AuthenticatedRequest } from '../../../lib/middlewares/authenticated';
-import { httpGet } from '../../../lib/middlewares/methods';
+import { AuthenticatedRequest } from '../../../lib/middlewares/authenticated';
 import UserRepository from '@aobeta/db-model/repositories/UserRepository';
 import prisma from '../../../lib/prisma';
+import { AuthenticatedRequestHandler } from '../../../lib/middlewares/handlers';
 
 const userRepository = new UserRepository(prisma);
 
@@ -13,4 +13,4 @@ async function handler(req: AuthenticatedRequest, res: NextApiResponse) {
 	res.status(OK).json(user);
 }
 
-export default httpGet(authenticated(handler));
+export default AuthenticatedRequestHandler().get(handler);

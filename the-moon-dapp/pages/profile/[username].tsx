@@ -12,6 +12,7 @@ import SocialIcon from '../../components/customIcons/socialIcon';
 import { TabLink } from '../../components/underLineLink';
 import { useUser } from '../../context/UserProvider';
 import prisma from '../../lib/prisma';
+import { NOT_FOUND_ROUTE } from '../../Routes';
 import { SocialLinkType } from '../../types/social';
 
 const defaultTab = (profile: Profile) =>
@@ -101,7 +102,7 @@ const ProfilePage: FunctionComponent<Props> = (props) => {
 					<Box direction="row" justify="center" margin="medium">
 						<Location color="brand" />
 						<Text margin={{ horizontal: 'medium' }} color="brand">
-							Canada
+							{profile.location}
 						</Text>
 					</Box>
 				)}
@@ -197,7 +198,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	if (profile == null) {
 		return {
 			redirect: {
-				destination: '/404',
+				destination: NOT_FOUND_ROUTE,
 				permanent: false,
 			},
 		};

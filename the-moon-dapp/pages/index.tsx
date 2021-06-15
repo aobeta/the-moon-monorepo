@@ -1,11 +1,10 @@
 import { MoonNftPackData } from '@aobeta/flow-lib/types/Nft';
-import axios from 'axios';
 import { Box, Heading, Image, Paragraph } from 'grommet';
 import { FunctionComponent, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const Home: FunctionComponent = () => {
-	const [packs, setPacks] = useState<MoonNftPackData[]>([]);
+	const [packs] = useState<MoonNftPackData[]>([]);
 
 	useEffect(() => {
 		// axios.get('/api/nft/packs').then(({ data }) => {
