@@ -1,6 +1,6 @@
 import * as ProfileApi from '../../api-clients/ProfileApi';
 import React, { FunctionComponent, useState, useEffect } from 'react';
-import { Box, Button, Grid, Heading, Text, TextInput, Select } from 'grommet';
+import { Box, Button, Grid, Heading, Text, TextInput, Select, CheckBoxGroupExtendedProps } from 'grommet';
 import { Search as SearchIcon } from 'grommet-icons';
 import { useRouter } from 'next/router';
 import { MediaType } from '../../types/media';
@@ -10,19 +10,19 @@ import InfluencerThumbnails from './influencer_thumbnail';
 
 const data = [
     {
-      title: 'creator-1',
+      title: 'Lilly Sheriff',
 	  numassets: 42,
       mediaFile: 'https://i.redd.it/oywdqqqxvau61.jpg',
       mediaType: MediaType.Image,
     },
     {
-      title: 'creator-2',
+      title: 'Sarah Dimes',
 	  numassets: 23,
       mediaFile: 'https://i.redd.it/5g5y4dbtyms61.jpg',
       mediaType: MediaType.Image,
     },
     {
-      title: 'creator-3',
+      title: 'Belle Delphine',
 	  numassets: 14,
       mediaFile: 'https://pbs.twimg.com/media/Cx8iU1WWEAAURRp.jpg',
       mediaType: MediaType.Image,
@@ -30,13 +30,31 @@ const data = [
   ];
 
 
-
 const Creators: FunctionComponent = () => {
+
+	
+	const router = useRouter();
+	
+	const handleCardClick = (title, numassets, mediaFile, mediaType) =>
+    router.push({
+      pathname: '/creators/creatorDetails',
+      query: {
+        title,
+		numassets,
+        mediaFile,
+        mediaType,
+      },
+    });
+
 	useEffect(() => {
 		/** Sample usage of profile API. make sure to throttle requests so as not to put a load on our DB */
-		ProfileApi.searchForInfluencer('mer').then((result) =>
-			console.log('SEARCH INFLUENCER RESULT: ', result),
+		ProfileApi.searchForInfluencer(" ").then((result) =>
+			console.log('SEARCH INFLUENCER RESULT: ', result)
 		);
+
+		
+
+
 	}, []);
 
 	const [value, setValue] = React.useState('Most Collectibles');
@@ -63,12 +81,13 @@ const Creators: FunctionComponent = () => {
 					/>
 				</Box>
 			</Box>
-			<Box align="baseline" gridArea="fave_influencer_heading" direction="row" justify="start" margin={{ left: '90px'}}>
-				<Header margin="none">My Favourite Influencers</Header>
+			<Box align="baseline" gridArea="fave_influencer_heading" direction="row" justify="start" margin={{ left: '60px'}}>
+				<Header margin="none">My Favourite Content Creators</Header>
 			</Box>
-			<Box  gridArea="influencer1"  margin={{ left: '50px'}} justify="center"direction="row" border="bottom">
+			<Box  gridArea="influencer1"  margin={{ left: '20px'}} justify="center"direction="row" border="bottom">
 			{data.map(({ title, mediaFile, mediaType, numassets }, i) => (
-          		<Box wrap={true} height="medium"key={i}>
+          		<div key={i} onClick={() => handleCardClick(title, mediaFile, numassets, mediaType)}>
+				<Box height="medium" wrap={true}>
             	<InfluencerThumbnails
               	key={i}
               	title={title}
@@ -76,14 +95,15 @@ const Creators: FunctionComponent = () => {
 				  numassets={numassets}
               	mediaType={mediaType}
             	/>
-          		</Box>
+				</Box>
+          		</div>
         		))}
 			</Box>
-			<Box width="large" align="baseline" gridArea="influencer_heading" direction="row" justify="start" margin={{ left: '90px'}}>
-				<Header margin="none">Influencers</Header>
+			<Box width="large" align="baseline" gridArea="influencer_heading" direction="row" justify="start" margin={{ left: '60px'}}>
+				<Header margin="none">Content Creators</Header>
 			</Box>
 			<Box gridArea="sort" fill align="center" justify="start" > 
-				<Box align="center" direction="row" margin={{ right: '35px'}}>
+				<Box align="center" direction="row" margin={{ right: '30px'}}>
 					<SortText>Sort By</SortText>
 					<Select
 						options={['Most Assets', 'Most Collectibles', 'Most Likes']}
@@ -92,9 +112,10 @@ const Creators: FunctionComponent = () => {
 					/>
 				</Box>
 			</Box>
-			<Box  gridArea="influencer2"  margin={{ left: '50px'}} justify="center"direction="row">
+			<Box  gridArea="influencer2"  margin={{ left: '20px'}} justify="center"direction="row">
 			{data.map(({ title, mediaFile, mediaType, numassets }, i) => (
-          		<Box wrap={true} height="medium"key={i}>
+          		<div key={i} onClick={() => handleCardClick(title, mediaFile, numassets, mediaType)}>
+				<Box height="medium" wrap={true}>
             	<InfluencerThumbnails
               	key={i}
               	title={title}
@@ -102,7 +123,8 @@ const Creators: FunctionComponent = () => {
 				  numassets={numassets}
               	mediaType={mediaType}
             	/>
-          		</Box>
+				</Box>
+          		</div>
         		))}
 			</Box>
 		</Grid>);

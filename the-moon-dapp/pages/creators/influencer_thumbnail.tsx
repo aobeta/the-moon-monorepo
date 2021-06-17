@@ -14,6 +14,10 @@ interface Props {
 }
 
 const InfluencerThumbnails: FunctionComponent<Props>  = (props: Props) => {
+
+
+
+
 	const { mediaFile, mediaType, title, numassets} = props;
 	const router = useRouter();
 	// const { title, numassets, mediaFile, mediaType } = router.query;
@@ -37,38 +41,34 @@ const InfluencerThumbnails: FunctionComponent<Props>  = (props: Props) => {
 		fileReader.readAsDataURL(mediaFile);
 	}, [mediaFile]);
 	return (
-		<Box align="center" border={{
-			"color": "${Colors[Color.WHEAT]}",
-			"size": "xsmall",
-			"side": "all"
-		  }}>
-			<CardContainer
-				round="10px"
-				width="medium"
-				pad="10px"
-				margin={{ horizontal: '40px' }}
-			>	
-				<Card round="2px" pad="10px">
-					<CardBody>
-						{mediaType === MediaType.Image && <Image fit="cover" src={fileSource} />}
-						{/* {mediaType === MediaType.Video && (
-              <VideoElement videoFile={mediaFile} customWidth={350} />
-            )} */}
-					</CardBody>
-					<CardFooter pad="medium" direction="row" gap="xxsmall">
-						<Box>
-							<Header alignSelf="start" style={{ fontFamily: 'Moon Light', fontSize: '20px' }}>
-								{title}
-							</Header>
-							<Text alignSelf="start" style={{ fontFamily: 'Moon Light', fontSize: '20px' }}>
-								{numassets} Assets
-							</Text>
-						</Box>
-						<FaveIcon color="red"/>
-					</CardFooter>
-				</Card>
-			</CardContainer>
-		</Box>
+		<Grid
+		rows={['small']}
+		columns={['xsmall', 'small']}
+		areas={[
+			{ name: 'creatorpic', start: [0, 0], end: [0, 0] },
+			{ name: 'creatordesc', start: [1, 0], end: [1, 0] }, 
+			
+		]}
+		margin="large"
+		border="all">
+			<Box gridArea="creatorpic">
+			{mediaType === MediaType.Image && <Image fit="cover" src={fileSource} />}
+			</Box>
+			<Box gridArea="creatordesc">
+            <Header alignSelf="start" style={{ fontFamily: 'Moon Light', fontSize: '20px' }}>
+                {title}
+            </Header>
+			<Box direction="row">
+				<Text alignSelf="start" style={{ fontFamily: 'Moon Light', fontSize: '15px' }} margin={{ left: '35px', right: '50px'}}>
+					{numassets} Assets			
+				</Text>
+				<FaveIcon color="red"/>	
+			</Box>
+
+
+			</Box>				
+			</Grid>
+
 	);
 };
 
@@ -80,8 +80,10 @@ const CardContainer = styled(Box)`
 const Header = styled(Text)`
   font-family: 'Parisienne';
   text-decoration: none !important;
-  font-size: 32px;
+  font-size: 64px;
   align-self: center;
+  margin-top: 50px;
+  margin-bottom: 55px;
   color: ${Colors[Color.WHEAT]};
 `;
 
